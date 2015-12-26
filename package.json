@@ -1,0 +1,52 @@
+{
+  "name": "hybridapps",
+  "description": "Express' Hybrid application generator",
+  "version": "0.1.0",
+  "author": "Amol C <amol.chawathe@fountaintechies.com>",
+  "contributors": [
+    "Amol Vhankalas <amolv@fountaintechies.com>",
+    "Nitin Dolli <nitin.dolli@fountaintechies.com>"
+  ],
+  "keywords": [
+    "express",
+    "framework",
+    "sinatra",
+    "web",
+    "rest",
+    "restful",
+    "router",
+    "app",
+    "api",
+    "ionic",
+    "angularjs"
+  ],
+  "repository": "amolc/express-hybrid",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "2.7.1",
+    "mkdirp": "0.5.1",
+    "sorted-object": "1.0.0"
+  },
+  "main": "bin/hybridapps",
+  "preferGlobal": true,
+  "bin": {
+    "hybridapps": "./bin/hybridapps"
+  },
+  "devDependencies": {
+    "mocha": "2.2.5",
+    "rimraf": "~2.2.8",
+    "supertest": "1.0.1"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "files": [
+    "LICENSE",
+    "bin/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "mocha --reporter spec --bail --check-leaks test/",
+    "test-ci": "mocha --reporter spec --check-leaks test/"
+  }
+}
