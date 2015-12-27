@@ -1,7 +1,7 @@
 {
   "name": "express-hybrid",
   "description": "Express' Hybrid application generator",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Amol C <amol.chawathe@fountaintechies.com>",
   "contributors": [
     "Amol Vhankalas <amol.vhankalas@fountaintechies.com>",
