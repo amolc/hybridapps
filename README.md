@@ -1,2 +1,1 @@
-# hybridapps
 # express-hybrid
