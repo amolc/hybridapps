@@ -1,7 +1,7 @@
 {
   "name": "express-hybrid",
   "description": "Express' Hybrid application generator",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "author": "Amol C <amol.chawathe@fountaintechies.com>",
   "contributors": [
     "Amol Vhankalas <amol.vhankalas@fountaintechies.com>",
@@ -30,7 +30,7 @@
     "mkdirp": "0.5.1",
     "wrench": "~1.5.8",
     "sorted-object": "1.0.0",
-    "exec":"~0.1.0"
+    "exec": "~0.1.0"
   },
   "main": "bin/hybridapps",
   "preferGlobal": true,
