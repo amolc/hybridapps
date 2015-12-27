@@ -94,6 +94,15 @@ function loadTemplate(name) {
   return fs.readFileSync(path.join(__dirname, '..', 'templates', name), 'utf-8');
 }
 
+
+function copyDir(dirName,pathName){
+  var dirPath = path.join(__dirname, '..', 'templates');
+  console.log(dirPath);
+  wrench.copyDirSyncRecursive(dirPath,pathName, {
+    forceDelete: true
+});
+}
+
 /**
  * Main program.
  */
@@ -186,11 +195,7 @@ function main() {
   });
 }
 
-function copyDir(path){
-  wrench.copyDirSyncRecursive('../templates/mobile',path, {
-    forceDelete: true
-});
-}
+
 
 function createHybridApplication(app_name, path) {
   var wait = 5;
@@ -243,9 +248,9 @@ function createHybridApplication(app_name, path) {
     write(path + '/package.json', JSON.stringify(pkg, null, 2));
     write(path + '/app.js', app);
     mobileDir = path+'/mobile';
-    copyDir(mobileDir);
+    copyDir('mobile',mobileDir);
     publicDir = path+'/public';
-    copyDir(publicDir);
+    copyDir('public',publicDir);
     www = www.replace('{name}', app_name);
     write(path + '/www', www, 0755);
     complete();

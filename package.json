@@ -29,7 +29,8 @@
     "commander": "2.7.1",
     "mkdirp": "0.5.1",
     "wrench": "~1.5.8",
-    "sorted-object": "1.0.0"
+    "sorted-object": "1.0.0",
+    "exec":"~0.1.0"
   },
   "main": "bin/hybridapps",
   "preferGlobal": true,
