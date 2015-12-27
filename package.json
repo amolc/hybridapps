@@ -27,10 +27,11 @@
   "license": "MIT",
   "dependencies": {
     "commander": "2.7.1",
+    "exec": "~0.1.0",
+    "fs-extra": "^0.26.3",
     "mkdirp": "0.5.1",
-    "wrench": "~1.5.8",
     "sorted-object": "1.0.0",
-    "exec": "~0.1.0"
+    "wrench": "~1.5.8"
   },
   "main": "bin/hybridapps",
   "preferGlobal": true,
