@@ -91,6 +91,8 @@ function launchedFromCmd() {
  */
 
 function loadTemplate(name) {
+  var dirPath = path.join(__dirname, '..', 'templates', name);
+  console.log(dirPath);
   return fs.readFileSync(path.join(__dirname, '..', 'templates', name), 'utf-8');
 }
 
@@ -197,23 +199,10 @@ function main() {
   });
 }
 
+
+
 function createHybridApplication(app_name, pathName) {
   var wait = 5;
-
-  function complete(app_name) {
-
-    var dirPath = path.join(__dirname,'..',app_name);
-    console.log(dirPath);
-          cp.exec('npm install', { cwd : dirPath } ,function (error, stdout, stderr){
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
-          console.log('exec error: ' + error);
-          if (error !== null) {
-            console.log('exec error: ' + error);
-          }}
-        );
-
-  }
 
   // Create the App Directory
     mkdir(pathName, function(){});
@@ -224,11 +213,18 @@ function createHybridApplication(app_name, pathName) {
     var mpkg = pkg.replace('{name}', app_name);
     //console.log(mpkg);
     var dirPath = path.join(__dirname,'..',app_name);
-    write(dirPath + '/app.js', app);
+  //  write(dirPath + '/app.js', app);
     //write(dirPath + '/package.json',mpkg);
     console.log(dirPath);
 
-    fs.writeFile(dirPath+'/package.json', mpkg , function (err,data) {
+    fs.writeFile(pathName+'/package.json', mpkg , function (err,data) {
+      if (err) {
+        return console.log("writeeee"+err);
+      }
+      console.log("write"+data);
+    });
+
+    fs.writeFile(pathName+'/app.js', app , function (err,data) {
       if (err) {
         return console.log("writeeee"+err);
       }
@@ -236,10 +232,23 @@ function createHybridApplication(app_name, pathName) {
     });
 
 
-    copyDir('mobile',dirPath);
-    copyDir('public',dirPath);
+    copyDir('mobile',pathName);
+    copyDir('public',pathName);
     write(pathName + '/www', www, 0755);
     mkdir(pathName + '/api',function(){});
     complete(app_name);
+
+    function complete(app_name) {
+      var dirPath = path.join(__dirname,'..',app_name);
+      console.log(dirPath);
+            cp.exec('npm install', { cwd : pathName } ,function (error, stdout, stderr){
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if (error !== null) {
+              console.log('exec error: ' + error);
+            }}
+          );
+
+    }
 
 }
