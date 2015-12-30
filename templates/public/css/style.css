@@ -1,5 +1,24 @@
 /**  Demo App Css*/
+
 .comman_margin {
     margin-top: 10%;
     margin-left: 3%;
+}
+
+.footer {
+	border: 1px solid #efefef; 
+	height: 100px;
+}
+.header {
+	border: 1px solid #efefef; 
+	height: 130px;
+}
+.comman_background {
+	background-color: #efe;
+}
+.container_margin {
+	height:500px;
+}
+.comman_border {
+	border: 1px solid #efefef;
 }

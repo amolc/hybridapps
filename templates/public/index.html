@@ -13,19 +13,19 @@
 
   <!-- CSS Link-->
   <link href="bower_components/base/src/style.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 
   <!-- JS File Link-->
   <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="config/config.js"></script>
-
-
+  <script type="text/javascript" src="application.js"></script>
+  <script type="text/javascript" src="js/usercontroller.js"></script>
 </head>
 
 <body data-ng-controller="MainController">
-  <!-- Before login show this header -->
-  <div style="margin-bottom:10%;">
+  <div class="header">
     <header>
       <div align="right" ng-if="userCookies.login">
         Users
@@ -33,18 +33,19 @@
       </div>
     </header>
   </div> 
-  <!-- After login show this header -->
+
  
-  <!-- Admin Login  -->
+
   <div ui-view></div>
 
   
   <!-- Footer -->
-  <div style="margin-top:10%">
-    <footer id="footer">
+  <div>
+    <footer class="footer">
     </footer>
   </div>
-  <script type="text/javascript" src="application.js"></script>
-  <script type="text/javascript" src="js/usercontroller.js"></script>
+
+
+
 </body>
 </html>
