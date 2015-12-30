@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var router = express.Router();
 
 
 var app = express();
@@ -13,20 +13,21 @@ var app = express();
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'mobile')));
 
 
-
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
+*/
 // error handlers
 
 // development error handler
@@ -43,13 +44,37 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+/*app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
     error: {}
   });
-});
+});*/
 
+app.use('/', express.static(__dirname + '/public'));
+app.use('/api', express.static(__dirname + '/api'));
+
+var userlogin = require('./api/userlogin.js');
+var todos = require('./api/todos.js');
+
+// app.all('*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header("Access-Control-Allow-Headers", "Content-Type");
+//   next();
+// });
+
+
+app.post('/login', userlogin.login);
+app.post('/addtodos',todos.addtodos);
+app.post('/gettodos',todos.gettodos);
+app.post('/gettododetails',todos.gettododetails);
+
+// app.get('/api/userlogin', function(req, res) {
+//   res.send('hello world');
+// });
+//app.use('/api/companylogin',companylogin);
 
 module.exports = app;

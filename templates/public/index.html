@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:ng="http://angularjs.org" data-ng-app="DemoApp">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Sample App</title>
+
+
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="config/config.js"></script>
+
+
+</head>
+
+<body data-ng-controller="MainController">
+  <!-- Before login show this header -->
+  <div style="margin-bottom:10%;">
+    <header>
+      <div align="right" ng-if="userCookies.login">
+        <button ng-click="usersignout()">logout</button>
+      </div>
+    </header>
+  </div> 
+  <!-- After login show this header -->
+ 
+  <!-- Admin Login  -->
+  <div ui-view></div>
+
+  
+  <!-- Footer -->
+  <div style="margin-top:10%">
+    <footer id="footer">
+    </footer>
+  </div>
+  <script type="text/javascript" src="application.js"></script>
+  <script type="text/javascript" src="js/usercontroller.js"></script>
+</body>
+</html>
