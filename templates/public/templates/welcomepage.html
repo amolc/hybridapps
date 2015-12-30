@@ -1,5 +1,5 @@
 <div>
-	<div data-ng-controller="usercontroller" data-ng-init="init()">
+	<div data-ng-controller="usercontroller" data-ng-init="init()" style="margin-left:5%;">
 		<h1>Welcome {{ userCookies.user_name }}</h1>
 		<h2>Reminders List</h2>
 		<div>
@@ -8,7 +8,7 @@
       	<div ng-show = "IsVisible">
 			<form data-ng-submit="addUpdateTodos(data)">
 				<label for="addtodos" ng-if="!stateParams"><h3>Add Reminder</h3></label>
-				<label for="edittodos" ng-if="stateParams"><h3>Edit Reminder</h3></label
+				<label for="edittodos" ng-if="stateParams"><h3>Edit Reminder</h3></label>
 					Please Enter Reminder:<br><br>
 					<input type="text" name="todos" data-ng-model="data.todo_data"><br><br>
 					<button name="Add" type="submit" value="Addtodos" ng-if="stateParams == '' ">Add</button>
@@ -23,3 +23,46 @@
 
 	</div>	
 </div>
+<!-- <div>
+	<div class="col-2"></div>
+	
+	<div data-ng-controller="usercontroller" data-ng-init="init()" class="col-8">
+		<div class="col-10 push-1">
+			<h1>Welcome {{ userCookies.user_name }}</h1>
+		</div>
+
+		<div class="col-10 ">
+			<div class="col-6" style="margin-top:10px;">
+				<div class="col-12 push-1" style="margin-left:-10px;">
+					<button ng-click="ShowHide()">ADD Reminder</button>	
+				</div>
+				<div>
+					<form data-ng-submit="userlogin(user)" ng-show = "IsVisible">
+						<div class="col-12 push-1">
+							<label for="addtodos" ng-if="!stateParams"><h3>Add Reminder</h3></label>
+							<label for="edittodos" ng-if="stateParams"><h3>Edit Reminder</h3></label>
+						</div>
+						<fieldset>
+							<div>  	
+							  	<div class="field-group clear row"> 
+							  		<div class="col-5 push-1">
+							  			<input type="text" class="field" id="text-input" placeholder="Enter Email Address" data-ng-model="user.user_email">
+							  		</div>
+							  	</div>
+							  	<div class="field-group clear row"> 
+							  		<div class="col-5 push-1">
+							  			<button class="field">LOGIN</button>
+							  		</div>
+							  	</div>
+							</div>	
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="col-6">
+				
+			</div>
+		</div>
+	</div>
+	<div class="col-2"></div>
+</div> -->
