@@ -18,11 +18,11 @@ SampleApplicationModule.config(['$urlRouterProvider', '$stateProvider', function
 
     $stateProvider
     .state('welcomepage', {
-      url: '/welcomepage',
+      url: '/welcomepage/:todo_id',
       templateUrl: 'templates/welcomepage.html'
     })
 
-    $stateProvider
+    /*$stateProvider
     .state('add_todos', {
       url: '/add_todos/:todo_id',
       templateUrl: 'templates/add_todos.html'
@@ -32,7 +32,7 @@ SampleApplicationModule.config(['$urlRouterProvider', '$stateProvider', function
     .state('listtodos', {
       url: '/listtodos',
       templateUrl: 'templates/list_todos.html'
-    })
+    })*/
 }]);
 
 

@@ -14,9 +14,17 @@ angular.module('DemoApp').controller('usercontroller', [
     
     $scope.init = function() {
       $scope.userCookies = $cookieStore.get('userCookies') || {};
-
+      $scope.gettodos();
+      $scope.gettododetails();
     }
       $scope.stateParams = $stateParams.todo_id;
+
+    $scope.IsVisible = false;
+    $scope.ShowHide = function () {
+      //If form is visible it will be hidden and vice versa.
+      $scope.IsVisible = $scope.IsVisible ? false : true;
+    }
+
     /**
       @function for addUpdateTodos
       @param {int} first - todo_id
@@ -44,9 +52,9 @@ angular.module('DemoApp').controller('usercontroller', [
         todo_data : data.todo_data,
         user_id: $scope.userCookies.userid
       }
-      
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
         $scope.gettodos();
+        $scope.IsVisible = false;
         $state.go('welcomepage');
       }).error(function() {
         console.log("Connection Problem.");
@@ -67,7 +75,8 @@ angular.module('DemoApp').controller('usercontroller', [
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         $scope.gettodos();
-        $state.go('welcomepage');
+        $location.path('/welcomepage/');
+        $scope.IsVisible = false;
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -130,6 +139,7 @@ angular.module('DemoApp').controller('usercontroller', [
                 }
             }
             $scope.gettodos();
+            $scope.IsVisible = false;
             $state.go('welcomepage');
           } else if(res.status === false){
             $scope.message = "failed to delete todo ";
