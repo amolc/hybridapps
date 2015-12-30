@@ -73,3 +73,49 @@ exports.gettododetails = function(req,res){
 	    }
   });
 }
+
+exports.updatetodos = function(req,res){
+  	  todosCRUD.update({
+  	  	'todo_id':req.body.todo_id,
+  	  },{
+  	  	'todo_data':req.body.todo_data
+  	  },function(error, result) {
+	    if (result) {
+	      responsedata = {
+	        status: true,
+	        record: result,
+	        message: 'Todos Updated successfully'
+	      }
+	      res.jsonp(responsedata);
+	    } else {
+	      responsedata = {
+	        status: false,
+	        record: result,
+	        message: 'Todos Failed to Update'
+	      }
+	      res.jsonp(responsedata);
+	    }
+  });
+}
+
+exports.deletetodo = function(req,res){
+	todosCRUD.destroy({
+	    'todo_id': req.body.todo_id
+	  }, function(error, result) {
+	    if (result) {
+	      responsedata = {
+	        status: true,
+	        record: result,
+	        message: 'Todos Deleted successfully'
+	      }
+	      res.jsonp(responsedata);
+	    } else {
+	      responsedata = {
+	        status: false,
+	        record: result,
+	        message: 'Todos Failed to Delete'
+	      }
+	      res.jsonp(responsedata);
+	    }
+  });
+}	

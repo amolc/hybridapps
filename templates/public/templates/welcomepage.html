@@ -1,9 +1,15 @@
 <div>
 	<div data-ng-controller="usercontroller" data-ng-init="gettodos()">
 		<h1>Welcome {{ userCookies.user_name }}</h1>
+		<h2>Reminder</h2>
 		<div>
         	<button ui-sref="add_todos">ADD</button>
-        	<button ui-sref="listtodos">LIST</button>
+        	<!-- <button ui-sref="listtodos">LIST</button> -->
+      	</div>
+      	<div>
+			<ul ng-repeat="todo in todolist">
+				<li> {{todo.todo_data}} <a ui-sref="add_todos({todo_id :todo.todo_id})">Edit</a> <a href="" ng-click="deletetodo(todo)">Delete</a></li>
+			</ul>
       	</div>
 	</div>	
 </div>

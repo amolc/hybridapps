@@ -1,18 +1,18 @@
 <div>
 	<div data-ng-controller="usercontroller" data-ng-init="gettododetails()">
-		<h1>Add Todo's</h1>
+		<h1>Reminders</h1>
 		<div>
         	<button ui-sref="add_todos">ADD</button>
-        	<button ui-sref="listtodos">LIST</button>
+        	<!-- <button ui-sref="listtodos">LIST</button> -->
         	<button ui-sref="welcomepage">Welcomepage</button>
       	</div>
       	<div>
-			<form data-ng-submit="addtodos(data)">
-				<label for="addtodos"><h3>Add Todo's</h3></label>
-					Please Enter Todo's:<br><br>
+			<form data-ng-submit="addUpdateTodos(data)">
+				<label for="addtodos"><h3>Add Reminder</h3></label>
+					Please Enter Reminder:<br><br>
 					<input type="text" name="todos" data-ng-model="data.todo_data"><br><br>
-					<button name="Add" type="submit" value="Addtodos">Add</button>
-					<button name="Update" type="submit" value="Addtodos">Update</button>
+					<button name="Add" type="submit" value="Addtodos" ng-if="stateParams == '' ">Add</button>
+					<button name="Update" type="submit" value="updatetodos" ng-if="stateParams != '' ">Update</button>
 			</form>
       	</div>
 	</div>	

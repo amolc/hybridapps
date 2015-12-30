@@ -71,7 +71,8 @@ app.post('/login', userlogin.login);
 app.post('/addtodos',todos.addtodos);
 app.post('/gettodos',todos.gettodos);
 app.post('/gettododetails',todos.gettododetails);
-
+app.post('/updatetodos',todos.updatetodos);
+app.post('/deletetodo',todos.deletetodo);
 // app.get('/api/userlogin', function(req, res) {
 //   res.send('hello world');
 // });
