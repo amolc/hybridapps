@@ -9,7 +9,7 @@ angular.module('DemoApp').controller('usercontroller', [
   '$cookieStore',
   function($scope, $http, $stateParams, $location, $rootScope,$state, $timeout,$cookieStore) {
     
-    //$scope.userCookies = $cookieStore.get('userCookies') || {};
+    $scope.userCookies = $cookieStore.get('userCookies') || {};
     
     
     $scope.init = function() {

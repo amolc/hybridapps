@@ -21,9 +21,33 @@
 				</form>
 	      	</div>
 	      	<div>
-				<ul ng-repeat="todo in todolist">
+				<!-- <ul ng-repeat="todo in todolist">
 					<li>{{todo.todo_data}} <button ui-sref="welcomepage({todo_id :todo.todo_id})" ng-click="ShowHide()">Edit</button> <button ng-click="deletetodo(todo)">Delete</button></li>
-				</ul>
+				</ul> -->
+				<table>
+					<caption>Reminder List</caption>
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>Reminder</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="todo in todolist">
+							<td>
+								{{todo.todo_id}}
+							</td>
+							<td>
+								{{todo.todo_data}}
+							</td>
+							<td>
+								<button ui-sref="welcomepage({todo_id :todo.todo_id})" ng-click="ShowHide()">Edit</button>
+								<button ng-click="deletetodo(todo)">Delete</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 	      	</div>
 
 		</div>	
