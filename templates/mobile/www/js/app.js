@@ -23,12 +23,16 @@ angular.module('starter', ['ionic' ,'starter.controllers','starter.services','an
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider , storeProvider) {
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+  
+  // Store defaults to localStorage but we can set sessionStorage or cookieStorage.
+  storeProvider.setStore('sessionStorage');
+
+
   $stateProvider
 
     .state('login', {
@@ -53,7 +57,8 @@ angular.module('starter', ['ionic' ,'starter.controllers','starter.services','an
     views: {
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+        //controller: 'DashCtrl'
+        controller: 'logincontroller'
       }
     }
   })
