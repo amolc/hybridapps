@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'mobile')));
 
 
+
 // catch 404 and forward to error handler
 /*app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -58,24 +59,17 @@ app.use('/api', express.static(__dirname + '/api'));
 var userlogin = require('./api/userlogin.js');
 var todos = require('./api/todos.js');
 
-// app.all('*', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-//   res.header("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
-
-app.post('/login', userlogin.login);
-app.post('/addtodos',todos.addtodos);
-app.post('/gettodos',todos.gettodos);
-app.post('/gettododetails',todos.gettododetails);
-app.post('/updatetodos',todos.updatetodos);
-app.post('/deletetodo',todos.deletetodo);
-// app.get('/api/userlogin', function(req, res) {
-//   res.send('hello world');
-// });
-//app.use('/api/companylogin',companylogin);
+app.post('/api/login', userlogin.login);
+app.post('/api/addtodos',todos.addtodos);
+app.post('/api/gettodos',todos.gettodos);
+app.post('/api/gettododetails',todos.gettododetails);
+app.post('/api/updatetodos',todos.updatetodos);
+app.post('/api/deletetodo',todos.deletetodo);
 
 module.exports = app;

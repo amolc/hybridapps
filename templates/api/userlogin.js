@@ -1,12 +1,12 @@
 var express = require('express');
-var router = express.Router();
 var http = require('http');
-var mysql = require('mysql');
 var CRUD = require('mysql-crud');
-var connection = require('./database');
+var env = require('./environment');
+var connection = env.Dbconnection;
 var userCRUD = CRUD(connection,'user');
 
 exports.login = function(req,res){
+  console.log("REQ.body",req.body);
   	  var email = req.body.user_email;
       var password = req.body.user_password;
       userCRUD.load({
