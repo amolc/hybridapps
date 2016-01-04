@@ -45,20 +45,20 @@ angular.module('starter', ['ionic' ,'starter.controllers','starter.services','an
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
+    //controller:'logincontroller'
   })
 
 
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.addreminder', {
+    url: '/addreminder',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        //controller: 'DashCtrl'
-        controller: 'logincontroller'
+        templateUrl: 'templates/add_reminder.html',
+        controller: 'ReminderController'
       }
     }
   })

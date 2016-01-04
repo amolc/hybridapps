@@ -6,21 +6,28 @@ angular.module('DemoApp').controller('usercontroller', [
   '$rootScope',
   '$state',
   '$timeout',
-  '$cookieStore',
-  function($scope, $http, $stateParams, $location, $rootScope,$state, $timeout,$cookieStore) {
+  'store',
+  function($scope, $http, $stateParams, $location, $rootScope,$state, $timeout,store) {
     
-    $scope.userCookies = $cookieStore.get('userCookies') || {};
+    //$scope.userCookies = $cookieStore.get('userCookies') || {};
     
     
     $scope.init = function() {
-      $scope.userCookies = $cookieStore.get('userCookies') || {};
+      //$scope.userCookies = $cookieStore.get('userCookies') || {};
+      $scope.userSession = store.get('userSession');
+      console.log($scope.userSession);
       $scope.gettodos();
       $scope.gettododetails();
+
+     /* $scope.user = {
+        user_email = "",
+        user_password = ""
+      }*/
     }
       
       $scope.stateParams = $stateParams.todo_id;
-
-    $scope.IsVisible = false;
+      $scope.IsVisible = false;
+      
     $scope.ShowHide = function () {
       //If form is visible it will be hidden and vice versa.
       $scope.IsVisible = $scope.IsVisible ? false : true;
@@ -51,7 +58,7 @@ angular.module('DemoApp').controller('usercontroller', [
     $scope.addtodos = function(data) {
       var tododata = {
         todo_data : data.todo_data,
-        user_id: $scope.userCookies.userid
+        user_id: $scope.userSession.userid
       }
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
         $scope.gettodos();
@@ -111,7 +118,7 @@ angular.module('DemoApp').controller('usercontroller', [
      */
     $scope.gettodos = function(data) {
       var tododata = {
-        user_id: $scope.userCookies.userid
+        user_id: $scope.userSession.userid
       }
       $http.post(baseUrl + 'gettodos',tododata).success(function(res, req) {
         $scope.todolist = res.record;

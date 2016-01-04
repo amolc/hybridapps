@@ -19,6 +19,7 @@
   <script type="text/javascript" src="lib/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/angular-cookies/angular-cookies.min.js"></script>
   <script type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="lib/a0-angular-storage/dist/angular-storage.min.js"></script>
   <script src="config/config.js"></script>
   <script type="text/javascript" src="application.js"></script>
   <script type="text/javascript" src="js/usercontroller.js"></script>
@@ -27,7 +28,7 @@
 <body data-ng-controller="MainController" data-ng-init="init()">
   <div class="header">
     <header>
-      <div align="right" ng-if="userCookies.login">
+      <div align="right" ng-if="userSession.login">
         Users
         <button ng-click="usersignout()">logout</button>
       </div>

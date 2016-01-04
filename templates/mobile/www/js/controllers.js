@@ -1,6 +1,30 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('ReminderController', function($scope, $http, $state, store) {
+
+     $scope.init = function() {
+      // This will look for obj in sessionStorage
+      $scope.usersession = store.get('userDetail') || {};
+      console.log($scope.usersession);
+      
+      
+   }
+
+   /**
+      @function usersignout
+      @author Sameer Vedpathak
+      @initialDate 
+      @lastDate
+    */
+    /*$scope.usersignout = function() {
+      $scope.init();
+      console.log("calling sign out function");
+      store.remove('userDetail');
+      $state.go('login');
+      
+    };*/
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

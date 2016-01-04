@@ -7,8 +7,9 @@ angular.module('starter.controllers')
       // This will look for obj in sessionStorage
       $scope.usersession = store.get('userDetail');
       console.log($scope.usersession);
-      //angular.equals(usersession, 'userDetail'); // return true
    }
+
+  
    /*
     @function userlogin
     @type post
@@ -16,15 +17,18 @@ angular.module('starter.controllers')
     @initialDate 
     @lastDate
     **/
+    $scope.userdetails = {
+        user_email : '',
+        user_password :''
+      }
 
     $scope.userlogin = function(user) {
      
-      var userdetails = {
+      $scope.userdetails = {
         user_email : user.email,
         user_password : user.password
       }
-  
-      $http.post(baseUrl + 'login', userdetails).success(function(res,req){
+      $http.post(baseUrl + 'login', $scope.userdetails).success(function(res,req){
 
         var userDetail = {
           login:'true',
@@ -36,7 +40,7 @@ angular.module('starter.controllers')
          // This will be saved in sessionStorage as obj
         store.set('userDetail', userDetail);
         $scope.init(); 
-        $state.go('tab.dash'); 
+        $state.go('tab.addreminder'); 
       }).error(function(){
         console.log("Connection Problem..");
       });
@@ -48,11 +52,16 @@ angular.module('starter.controllers')
       @initialDate 
       @lastDate
     */
+    
+
     $scope.usersignout = function() {
       store.remove('userDetail');
-      $state.go('login');
-      //$scope.usersession.login = false;
+      $scope.usersession = store.get('userDetail');
+      $scope.userdetails.user_email = '';
+      $scope.userdetails.user_password = '';
+      console.log("$scope.userdetails:",$scope.userdetails);
       $scope.init();
+      $state.go('login');
     };
 
 })

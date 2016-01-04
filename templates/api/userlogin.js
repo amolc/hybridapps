@@ -6,7 +6,6 @@ var connection = env.Dbconnection;
 var userCRUD = CRUD(connection,'user');
 
 exports.login = function(req,res){
-  console.log("REQ.body",req.body);
   	  var email = req.body.user_email;
       var password = req.body.user_password;
       userCRUD.load({

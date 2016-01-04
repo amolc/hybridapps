@@ -1,0 +1,40 @@
+<ion-view view-title="Dashboard" ng-init="init()">
+  <ion-content class="padding">
+    <div class="row" ng-controller="logincontroller">
+      <div class="col-100 col-offset-60" style="margin-left: 70%;">
+        <button  class="button button-positive" ng-click="usersignout()">Logout</button>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Add Reminder Here</div>
+      <form>
+        <div class="item item-body">
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                  <input type="text" placeholder="Add Reminder" ng-model="data.todo_data">
+                </label>
+                <button class="button button-small" type="submit">
+                  Add
+                </button>
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Health</div>
+      <div class="item item-body">
+        <div>
+          You ate an apple today!
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Upcoming</div>
+      <div class="item item-body">
+        <div>
+          You have <b>29</b> meetings on your calendar tomorrow.
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
