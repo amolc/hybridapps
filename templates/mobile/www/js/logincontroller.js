@@ -59,7 +59,7 @@ angular.module('starter.controllers')
       $scope.usersession = store.get('userDetail');
       $scope.userdetails.user_email = '';
       $scope.userdetails.user_password = '';
-      console.log("$scope.userdetails:",$scope.userdetails);
+      //console.log("$scope.userdetails:",$scope.userdetails);
       $scope.init();
       $state.go('login');
     };

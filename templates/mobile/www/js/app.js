@@ -54,7 +54,7 @@ angular.module('starter', ['ionic' ,'starter.controllers','starter.services','an
   // Each tab has its own nav history stack:
 
   .state('tab.addreminder', {
-    url: '/addreminder',
+    url: '/addreminder/:todo_id',
     views: {
       'tab-dash': {
         templateUrl: 'templates/add_reminder.html',

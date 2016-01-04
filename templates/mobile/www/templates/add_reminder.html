@@ -7,34 +7,35 @@
     </div>
     <div class="list card">
       <div class="item item-divider">Add Reminder Here</div>
-      <form>
+      <form ng-submit="addUpdateReminder(reminder)" name="addreminderfrm">
         <div class="item item-body">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                  <input type="text" placeholder="Add Reminder" ng-model="data.todo_data">
+                  <input type="text" placeholder="Add Reminder" ng-model="reminder.todo_data">
                 </label>
-                <button class="button button-small" type="submit">
-                  Add
-                </button>
+                <button class="button button-small" type="submit" ng-if="stateParams == '' ">Add</button>
+                <button class="button button-small" type="submit" ng-if="stateParams != '' ">Update</button>
             </div>
         </div>
       </form>
     </div>
     <div class="list card">
-      <div class="item item-divider">Health</div>
+      <div class="item item-divider">Reminder list</div>
       <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
+        <ul class="list" ng-repeat="reminder in reminderlist" style="border: 1px solid #efefef;">
+          <li class="item">
+            {{reminder.todo_data}} <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})"></i><i class="icon ion-trash-b"></i>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="list card">
+   <!--  <div class="list card">
       <div class="item item-divider">Upcoming</div>
       <div class="item item-body">
         <div>
           You have <b>29</b> meetings on your calendar tomorrow.
         </div>
       </div>
-    </div>
+    </div> -->
   </ion-content>
 </ion-view>
