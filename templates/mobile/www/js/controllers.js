@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 
   $scope.init = function() {
     $scope.usersession = store.get('userDetail') || {};
-     $scope.getreminders($scope.usersession.userid);
+     $scope.getreminders();
 
      if($stateParams){
       $scope.stateParams = $stateParams.todo_id;
@@ -78,9 +78,9 @@ angular.module('starter.controllers', [])
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
           console.log("Reminder Successfully Updated");
-          tododata = {};
-          $scope.getreminders($stateParams.todo_id);
-          $location.path('/tab/addreminder/');
+          $scope.getreminders();
+          $location.path('/tab/addreminder/' + $stateParams.todo_id);
+          
         }else{
           console.log("Reminder Failed To Update");
         }

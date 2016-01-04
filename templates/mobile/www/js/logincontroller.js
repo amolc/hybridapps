@@ -6,7 +6,7 @@ angular.module('starter.controllers')
       
       // This will look for obj in sessionStorage
       $scope.usersession = store.get('userDetail');
-      console.log($scope.usersession);
+     
    }
 
   
