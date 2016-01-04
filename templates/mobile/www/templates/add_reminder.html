@@ -24,7 +24,7 @@
       <div class="item item-body">
         <ul class="list" ng-repeat="reminder in reminderlist" style="border: 1px solid #efefef;">
           <li class="item">
-            {{reminder.todo_data}} <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})"></i><i class="icon ion-trash-b"></i>
+            {{reminder.todo_data}} <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})"></i><i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i>
           </li>
         </ul>
       </div>

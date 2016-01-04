@@ -4,10 +4,9 @@ angular.module('starter.controllers', [])
 
   $scope.init = function() {
     $scope.usersession = store.get('userDetail') || {};
-     $scope.getreminders();
+     $scope.getreminders($scope.usersession.userid);
 
      if($stateParams){
-      console.log("$stateParams:",$stateParams.todo_id);
       $scope.stateParams = $stateParams.todo_id;
       $scope.getreminderdetails($stateParams); 
      }else{
@@ -40,7 +39,6 @@ angular.module('starter.controllers', [])
    @initialDate
    @lastDate
   */
-    
     $scope.addReminder = function(reminder) {
       console.log("todo_data:",reminder);
       $scope.reminder_data = {
@@ -64,13 +62,14 @@ angular.module('starter.controllers', [])
       });
     }
 
-    /**
-     @function updateReminder
-     @type post
-     @author sameer Vedpathak
-     @initialDate
-     @lastDate
-     */
+  /**
+   @function updateReminder
+   @type post
+   @author sameer Vedpathak
+   @initialDate
+   @lastDate
+  */
+  
     $scope.updateReminder = function(reminder) {
       var tododata = {
         todo_data : reminder.todo_data,
@@ -79,8 +78,9 @@ angular.module('starter.controllers', [])
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
           console.log("Reminder Successfully Updated");
+          tododata = {};
+          $scope.getreminders($stateParams.todo_id);
           $location.path('/tab/addreminder/');
-          $scope.getreminders();
         }else{
           console.log("Reminder Failed To Update");
         }
@@ -90,13 +90,13 @@ angular.module('starter.controllers', [])
     }
 
 
-     /**
+   /**
      @function getreminders
      @type post
      @author sameer Vedpathak
      @initialDate
      @lastDate
-     */
+   */
     $scope.getreminders = function() {
       var reminderdata = {
         user_id: $scope.usersession.userid
@@ -108,13 +108,13 @@ angular.module('starter.controllers', [])
       });
     }
 
-    /**
-     @function gettodo
-     @type post
-     @author sameer Vedpathak
-     @initialDate
-     @lastDate
-     */
+  /**
+   @function getreminderdetails
+   @type post
+   @author sameer Vedpathak
+   @initialDate
+   @lastDate
+  */
     $scope.getreminderdetails = function() {
       var tododata = {
         todo_id: $stateParams.todo_id
@@ -125,6 +125,35 @@ angular.module('starter.controllers', [])
         console.log("Connection Problem.");
       });
     }
+
+  /**
+    @function deleteReminder
+    @type post
+    @author 
+    @initialDate
+    @lastDate
+  */
+    $scope.deleteReminder = function(reminder) {
+      var reminderdata = {
+        todo_id:reminder.todo_id
+      }
+      $http.post(baseUrl + 'deletetodo', reminderdata).success(function(res, req) {
+         if( res.status == true ){
+            // Remove the reminder from the reminderlist list
+            for (var i in $scope.reminderlist) {
+                if ($scope.reminderlist[i] == reminder) {
+                    $scope.reminderlist.splice(i, 1);
+                }
+            }
+            console.log("record deleted");
+            $scope.getreminders();
+          } else if(res.status === false){
+            console.log("Failed To delete Reminder");
+          }
+      }).error(function() {
+        console.log("Connection Problem.");
+      });
+    };  
 
 })
 
