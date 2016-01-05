@@ -1,1 +1,6 @@
 /* Empty. Add your own CSS if you like */
+.error_msg{
+	color: maroon;
+    font-size: 11px;
+    margin-left: 10px;
+}

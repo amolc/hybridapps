@@ -17,6 +17,11 @@ angular.module('starter.controllers', [])
      }  
   }
 
+  $scope.data = {
+      user_email: '' ,
+      user_password:''
+  };
+
   /**
     @function for addUpdateTodos
     @param {int} first - todo_id
