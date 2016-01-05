@@ -4,3 +4,10 @@
     font-size: 11px;
     margin-left: 10px;
 }
+
+.success_msg{
+	color: green;
+    font-size: 11px;
+    margin-left: 10px;
+    font-weight:bold;
+}

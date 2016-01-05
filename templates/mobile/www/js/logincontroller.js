@@ -3,10 +3,7 @@ angular.module('starter.controllers')
 .controller('logincontroller', function($scope, $http, $state, store , $location , $window, $timeout) {
 
 	 $scope.init = function() {
-      
-      // This will look for obj in sessionStorage
       $scope.usersession = store.get('userDetail') || {} ;
-     console.log($scope.usersession);
    }
 
    /*
@@ -22,9 +19,7 @@ angular.module('starter.controllers')
     };
 
     $scope.userlogin = function(data,valid) {
-      console.log("valid:",valid);
       if(valid){
-        $scope.data = angular.copy(data);
         $http.post(baseUrl + 'login', $scope.data).success(function(res,req){
             if(res.status == true){
               var userDetail = {
@@ -37,7 +32,6 @@ angular.module('starter.controllers')
               $scope.init(); 
               $state.go('tab.addreminder'); 
             }else{
-              console.log("res",res);
               $scope.loginerrormsg = 'Invalid Email Id and Password Combination';
               $scope.showloginerrormsg = true;
               // Simulate 2 seconds loading delay

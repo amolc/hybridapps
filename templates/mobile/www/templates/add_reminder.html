@@ -7,21 +7,27 @@
     </div>
     <div class="list card">
       <div class="item item-divider">Add Reminder Here</div>
-      <form ng-submit="addUpdateReminder(reminder)" name="addreminderfrm">
+      <form ng-submit="addUpdateReminder(reminder,addreminderfrm.$valid)" name="addreminderfrm" novalidate>
         <div class="item item-body">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                  <input type="text" placeholder="Add Reminder" ng-model="reminder.todo_data">
+                  <input type="text" placeholder="Add Reminder" ng-model="reminder.todo_data" name="add_reminder" required>
                 </label>
                 <button class="button button-small" type="submit" ng-if="stateParams == '' ">Add</button>
                 <button class="button button-small" type="submit" ng-if="stateParams != '' ">Update</button>
             </div>
+            <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.add_reminder.$error" role="alert" class="error_msg" ng-if="addreminderfrm.add_reminder.$error">
+              <div data-ng-message="required">Please Reminder </div>
+            </div>
+            <div ng-model="reminderaddmsg" ng-show="showreminderaddmsg" class="success_msg">{{reminderaddmsg}}</div>
+            <div ng-model="reminderupdatemsg" ng-show="showreminderupdatemsg" class="success_msg">{{reminderupdatemsg}}</div>
         </div>
       </form>
     </div>
     <div class="list card">
       <div class="item item-divider">Reminder list</div>
       <div class="item item-body">
+        <div ng-model="reminderdeletemsg" ng-show="showreminderdeletemsg" class="success_msg">{{reminderdeletemsg}}</div>
         <ul class="list" ng-repeat="reminder in reminderlist" style="border: 1px solid #efefef;">
           <li class="item">
              <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}}

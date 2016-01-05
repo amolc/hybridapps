@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('ReminderController', function($scope, $http, $state, store ,$stateParams,$location) {
+.controller('ReminderController', function($scope, $http, $state, store ,$stateParams,$location,$timeout) {
 
   $scope.init = function() {
     $scope.usersession = store.get('userDetail') || {};
@@ -30,11 +30,14 @@ angular.module('starter.controllers', [])
     @lastDate
   */
  
-    $scope.addUpdateReminder = function(reminder) {
-      if ($stateParams.todo_id)
-        $scope.updateReminder(reminder);
-      if ($stateParams.todo_id == '')
-        $scope.addReminder(reminder);
+    $scope.addUpdateReminder = function(reminder,valid) {
+      if(valid){
+          if ($stateParams.todo_id)
+            $scope.updateReminder(reminder);
+          if ($stateParams.todo_id == '')
+            $scope.addReminder(reminder);  
+      }
+      
     };
 
   /**
@@ -44,19 +47,27 @@ angular.module('starter.controllers', [])
    @initialDate
    @lastDate
   */
+    $scope.reminder_data = {};
     $scope.addReminder = function(reminder) {
-      console.log("todo_data:",reminder);
+     
       $scope.reminder_data = {
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid
       }
       $http.post(baseUrl + 'addtodos',$scope.reminder_data).success(function(res, req) {
       if(res.status == true){
-        console.log("Reminder Added Successfully");
-        $scope.reminder_data = {
-          todo_data : "",
-          user_id :null
-        }
+         
+          $scope.reminderaddmsg = 'Reminder Added Successfully';
+          $scope.showreminderaddmsg = true;
+          // Simulate 2 seconds loading delay
+          $timeout(function() {
+            // Loadind done here - Show message for 3 more seconds.
+            $timeout(function() {
+              $scope.showreminderaddmsg = false;
+            }, 3000);
+          }, 2000);
+
+        $scope.reminder_data = {};
         $scope.getreminders();
         $location.path('/tab/addreminder/');
       }else{
@@ -75,17 +86,26 @@ angular.module('starter.controllers', [])
    @lastDate
   */
   
-    $scope.updateReminder = function(reminder) {
+    $scope.updateReminder = function(reminder,valid) {
       var tododata = {
         todo_data : reminder.todo_data,
         todo_id: $stateParams.todo_id
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
-          console.log("Reminder Successfully Updated");
+          $scope.reminderupdatemsg = 'Reminder Updated Successfully';
+          $scope.showreminderupdatemsg = true;
+          // Simulate 2 seconds loading delay
+          $timeout(function() {
+            // Loadind done here - Show message for 3 more seconds.
+            $timeout(function() {
+              $scope.showreminderupdatemsg = false;
+            }, 3000);
+             $location.path('/tab/addreminder/' + $stateParams.todo_id);
+             //$location.path('/tab/addreminder/');
+          }, 2000);
+
           $scope.getreminders();
-          $location.path('/tab/addreminder/' + $stateParams.todo_id);
-          
         }else{
           console.log("Reminder Failed To Update");
         }
@@ -150,7 +170,18 @@ angular.module('starter.controllers', [])
                     $scope.reminderlist.splice(i, 1);
                 }
             }
-            console.log("record deleted");
+            
+            $scope.reminderdeletemsg = 'Reminder Deleted Successfully';
+            $scope.showreminderdeletemsg = true;
+              // Simulate 2 seconds loading delay
+              $timeout(function() {
+                // Loadind done here - Show message for 3 more seconds.
+                $timeout(function() {
+                  $scope.showreminderdeletemsg = false;
+                }, 3000);
+                 $location.path('/tab/addreminder/');
+              }, 2000);
+
             $scope.getreminders();
           } else if(res.status === false){
             console.log("Failed To delete Reminder");
