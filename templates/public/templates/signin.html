@@ -1,5 +1,5 @@
 <div class="container_margin">
-	<form data-ng-submit="userlogin(user,loginfrm.$valid)" name="loginfrm" novalidate>
+	<form data-ng-submit="userlogin(user,loginfrm.$valid)" name="loginfrm" id="loginform" novalidate>
 	<fieldset>
 		<div class="col-10">  	
 		  	<div class="field-group clear row"> 
@@ -23,10 +23,10 @@
 		  		<div class="col-5 push-5">
 		  			<input type="password" class="field" id="text-input" name="password"placeholder="Enter Password" data-ng-model="user.user_password" required>
 		  			<span ng-if="loginfrm.$submitted">
-            		<div data-ng-messages="loginfrm.$submitted && loginfrm.password.$error" role="alert" class="error_msg">
-	                  <div data-ng-message="required">Please Enter Password</div>
-            		</div>
-          		</span>
+	            		<div data-ng-messages="loginfrm.$submitted && loginfrm.password.$error" role="alert" class="error_msg">
+		                  <div data-ng-message="required">Please Enter Password</div>
+	            		</div>
+          			</span>
 		  		</div>
 		  	</div>
 		  	<div class="field-group clear row"> 

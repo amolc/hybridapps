@@ -62,6 +62,7 @@ angular.module('starter.controllers', [])
             $timeout(function() {
               $scope.showreminderaddmsg = false;
             }, 3000);
+              document.getElementById("addreminderform").reset();
              $state.go('tab.addreminder');
           }, 2000);
 
@@ -93,6 +94,7 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
+          $scope.getreminders();
           $scope.reminderupdatemsg = 'Reminder Updated Successfully';
           $scope.showreminderupdatemsg = true;
           // Simulate 2 seconds loading delay
@@ -101,11 +103,13 @@ angular.module('starter.controllers', [])
             $timeout(function() {
               $scope.showreminderupdatemsg = false;
             }, 3000);
-             $location.path('/tab/addreminder/' + $stateParams.todo_id);
+             document.getElementById("addreminderform").reset();
+             $location.path('/tab/addreminder/');
+              $scope.getreminders(); 
              //$location.path('/tab/addreminder/');
           }, 2000);
-
-          $scope.getreminders();
+           
+          
         }else{
           console.log("Reminder Failed To Update");
         }

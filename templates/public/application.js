@@ -50,7 +50,6 @@ angular.module('DemoApp').controller('MainController', [
 
     $scope.init = function() {
 
-      //$scope.userCookies = $cookieStore.get('userCookies') || {};
        $scope.userSession = store.get('userSession') || {};
     }
 
@@ -86,6 +85,7 @@ angular.module('DemoApp').controller('MainController', [
                   $timeout(function() {
                     $scope.showloginfailuremsg = false;
                   }, 3000);
+                   document.getElementById("loginform").reset();
                 }, 2000);
               }
           }).error(function() {
@@ -101,10 +101,6 @@ angular.module('DemoApp').controller('MainController', [
       @lastDate
     */
     $scope.usersignout = function() {
-      //$cookieStore.remove('userCookies');
-      //$location.path('signin');
-      //$scope.userCookies.login = false;
-      //$scope.init();
       store.remove('userSession');
       $location.path('signin');
       $scope.init();

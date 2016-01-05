@@ -30,7 +30,7 @@
 .success_msg{
 	font-size: 11px;
     margin-left: 10px;
-    color: maroon;
+    color: green;
 }
 .login_err_msg{
 	text-align: center;

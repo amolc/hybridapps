@@ -40,6 +40,7 @@ angular.module('starter.controllers')
                 $timeout(function() {
                   $scope.showloginerrormsg = false;
                 }, 3000);
+
               }, 2000);
             }
         }).error(function(){
@@ -59,7 +60,8 @@ angular.module('starter.controllers')
       store.remove('userDetail');
       $scope.data.user_email = "";
       $scope.data.user_password = "";
-      $window.location.reload(true)
+      //$window.location.reload(true)
+       document.getElementById("loginfrm").reset();
       $location.path('/login')
     };
 

@@ -1,30 +1,35 @@
 <div class="comman_background">
-<div class="container container_margin" data-ng-controller="usercontroller" data-ng-init="init()">
+<div class="container container_margin" data-ng-controller="usercontroller" data-ng-init="init()" >
 <div class="col-12" class="comman_border">
 	<div class="col-2" style="margin-bottom:30px;">
 	</div>
 	<div class="col-8">
 		<div>
-			<h1>Welcome {{ userCookies.user_name }}</h1>
+			<h1>Welcome {{ userSession.user_name }}</h1>
 			<h2>Reminders List</h2>
 			<div>
 	        	<button ng-click="ShowHide()">ADD Reminder</button>
 	      	</div>
 	      	<div ng-show = "IsVisible">
-				<form data-ng-submit="addUpdateTodos(data)">
-					<label for="addtodos" ng-if="!stateParams"><h3>Add Reminder</h3></label>
-					<label for="edittodos" ng-if="stateParams"><h3>Edit Reminder</h3></label>
-						Please Enter Reminder:<br><br>
-						<input type="text" name="todos" data-ng-model="data.todo_data"><br><br>
+				<form name="addreminderfrm" data-ng-submit="addUpdateTodos(data,addreminderfrm.$valid)" id="addreminderForm" novalidate>
+					<label for="addtodos" ng-if="!stateParams"><h4>Add Reminder</h4></label>
+					<label for="edittodos" ng-if="stateParams"><h4>Edit Reminder</h4></label>
+						<input type="text" name="todos" data-ng-model="data.todo_data" placeholder="Enter Reminder" required><br><br>
+						<span >
+		            		<div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.todos.$error" role="alert" class="error_msg">
+			                  <div data-ng-message="required">Please Enter Reminder</div>
+		            		</div>
+          				</span>
 						<button name="Add" type="submit" value="Addtodos" ng-if="stateParams == '' ">Add</button>
 						<button name="Update" type="submit" value="updatetodos" ng-if="stateParams != '' ">Update</button>
 				</form>
 	      	</div>
+	      		<div ng-model="Remindersuccessmsg" ng-show="showRemindersuccessmsg" class="success_msg">{{Remindersuccessmsg}}</div>
+	      		<div ng-model="updateRemindermsg" ng-show="showupdateRemindermsg" class="success_msg">{{updateRemindermsg}}</div>
+
 	      	<div>
-				<!-- <ul ng-repeat="todo in todolist">
-					<li>{{todo.todo_data}} <button ui-sref="welcomepage({todo_id :todo.todo_id})" ng-click="ShowHide()">Edit</button> <button ng-click="deletetodo(todo)">Delete</button></li>
-				</ul> -->
 				<table>
+					<div ng-model="Reminderdelmsg" ng-show="showReminderdelmsg" class="success_msg">{{Reminderdelmsg}}</div>
 					<caption>Reminder List</caption>
 					<thead>
 						<tr>

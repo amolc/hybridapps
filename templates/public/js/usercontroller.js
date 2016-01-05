@@ -13,16 +13,11 @@ angular.module('DemoApp').controller('usercontroller', [
     
     
     $scope.init = function() {
-      //$scope.userCookies = $cookieStore.get('userCookies') || {};
+      
       $scope.userSession = store.get('userSession');
-      console.log($scope.userSession);
       $scope.gettodos();
       $scope.gettododetails();
 
-     /* $scope.user = {
-        user_email = "",
-        user_password = ""
-      }*/
     }
       
       $scope.stateParams = $stateParams.todo_id;
@@ -41,11 +36,13 @@ angular.module('DemoApp').controller('usercontroller', [
       @lastDate
     */
    
-    $scope.addUpdateTodos = function(data) {
-      if ($stateParams.todo_id)
-        $scope.updatetodos(data);
-      if ($stateParams.todo_id == '')
-        $scope.addtodos(data);
+    $scope.addUpdateTodos = function(data,valid) {
+      if(valid){
+        if ($stateParams.todo_id)
+          $scope.updatetodos(data);
+        if ($stateParams.todo_id == '')
+          $scope.addtodos(data);
+      }
     };
 
     /**
@@ -61,9 +58,21 @@ angular.module('DemoApp').controller('usercontroller', [
         user_id: $scope.userSession.userid
       }
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
-        $scope.gettodos();
-        $scope.IsVisible = false;
-        $state.go('welcomepage');
+        if(res.status == true){
+          $scope.gettodos();
+          $scope.IsVisible = false;
+          $scope.Remindersuccessmsg = 'Reminder Added Successfully';
+          $scope.showRemindersuccessmsg = true;
+          // Simulate 2 seconds loading delay
+          $timeout(function() {
+              // Loadind done here - Show message for 3 more seconds.
+              $timeout(function() {
+                $scope.showRemindersuccessmsg = false;
+              }, 3000);
+            document.getElementById("addreminderForm").reset();
+            $state.go('welcomepage');
+          }, 2000);
+        }
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -82,16 +91,28 @@ angular.module('DemoApp').controller('usercontroller', [
        todo_id: $stateParams.todo_id
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
-        $scope.gettodos();
-        $location.path('/welcomepage/');
-        $scope.IsVisible = false;
+       if(res.status == true){
+          $scope.updateRemindermsg = 'Reminder Updated Successfully';
+          $scope.showupdateRemindermsg = true;
+            // Simulate 2 seconds loading delay
+            $timeout(function() {
+                // Loadind done here - Show message for 3 more seconds.
+                $timeout(function() {
+                  $scope.showupdateRemindermsg = false;
+                }, 3000);
+                  $scope.gettodos();
+                  document.getElementById("addreminderForm").reset();
+                  $location.path('/welcomepage/');
+              }, 2000);
+        }
+          $scope.IsVisible = false;
       }).error(function() {
         console.log("Connection Problem.");
       });
     }
 
     /**
-     @function gettodo
+     @function gettododetails
      @type post
      @author sameer Vedpathak
      @initialDate
@@ -108,7 +129,6 @@ angular.module('DemoApp').controller('usercontroller', [
       });
     }
 
-    //$scope.gettodo();
     /**
      @function gettodos
      @type post
@@ -146,6 +166,17 @@ angular.module('DemoApp').controller('usercontroller', [
                     $scope.todolist.splice(i, 1);
                 }
             }
+            $scope.Reminderdelmsg = 'Reminder Deleted Successfully';
+            $scope.showReminderdelmsg = true;
+            // Simulate 2 seconds loading delay
+              $timeout(function() {
+                  // Loadind done here - Show message for 3 more seconds.
+                  $timeout(function() {
+                    $scope.showReminderdelmsg = false;
+                  }, 3000);
+                   //document.getElementById("loginform").reset();
+              }, 2000);
+
             $scope.gettodos();
             $scope.IsVisible = false;
             $state.go('welcomepage');
