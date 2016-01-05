@@ -11,7 +11,7 @@
 	        	<button ng-click="ShowHide()">ADD Reminder</button>
 	      	</div>
 	      	<div ng-show = "IsVisible">
-				<form name="addreminderfrm" data-ng-submit="addUpdateTodos(data,addreminderfrm.$valid)" id="addreminderForm" novalidate>
+				<!-- <form name="addreminderfrm" data-ng-submit="addUpdateTodos(data,addreminderfrm.$valid)" id="addreminderForm" novalidate>
 					<label for="addtodos" ng-if="!stateParams"><h4>Add Reminder</h4></label>
 					<label for="edittodos" ng-if="stateParams"><h4>Edit Reminder</h4></label>
 						<input type="text" name="todos" data-ng-model="data.todo_data" placeholder="Enter Reminder" required><br><br>
@@ -22,6 +22,28 @@
           				</span>
 						<button name="Add" type="submit" value="Addtodos" ng-if="stateParams == '' ">Add</button>
 						<button name="Update" type="submit" value="updatetodos" ng-if="stateParams != '' ">Update</button>
+				</form> -->
+				<form name="addreminderfrm" data-ng-submit="addUpdateTodos(data,addreminderfrm.$valid)" id="addreminderForm" novalidate>
+					<fieldset>
+						<div class="field-group clear row" >
+							<div class="col-3" style="margin-top: 7px;">
+								<label class="field lable_margin" for="addtodos" ng-if="!stateParams">Add Reminder</label>
+								<label class="field lable_margin" for="edittodos" ng-if="stateParams">Edit Reminder</label>
+							</div>
+							<div class="col-6">
+								<input type="text" class="field" Placeholder="Please Enter Reminder" name="todos" data-ng-model="data.todo_data" required>
+								<span >
+		            				<div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.todos.$error" role="alert" class="error_msg">
+			                  			<div data-ng-message="required">Please Enter Reminder</div>
+		            				</div>
+          						</span>
+							</div>
+							<div class="col-3">
+								<button name="Add" type="submit" value="Addtodos" ng-if="stateParams == '' " class="field" style="height: 35px;">Add</button>
+								<button name="Update" type="submit" value="updatetodos" ng-if="stateParams != '' " class="field" style="height: 35px;">Update</button>
+							</div>
+						</div>
+					</fieldset>
 				</form>
 	      	</div>
 	      		<div ng-model="Remindersuccessmsg" ng-show="showRemindersuccessmsg" class="success_msg">{{Remindersuccessmsg}}</div>
