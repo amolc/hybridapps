@@ -6,7 +6,7 @@ var ApplicationModuleName = 'DemoApp';
 
 
 // Create the main application
-var SampleApplicationModule = angular.module('DemoApp', ['ui.router','angular-storage']);
+var SampleApplicationModule = angular.module('DemoApp', ['ui.router','angular-storage','ngMessages']);
 
 SampleApplicationModule.config(['$urlRouterProvider', '$stateProvider','storeProvider', function($urlRouterProvider, $stateProvider , storeProvider) {
   storeProvider.setStore('sessionStorage');
@@ -62,26 +62,36 @@ angular.module('DemoApp').controller('MainController', [
     @lastDate
     **/
 
-    $scope.userlogin = function(user) {
-        $http.post(baseUrl + 'login',user).success(function(res, req) {
-          if (res.status == true) {
-            var userSession = {
-              'login': true,
-              'userid': res.record[0].id,
-              'user_email': res.record[0].user_email,
-              'user_name': res.record[0].user_name
-            };
-            store.set('userSession', userSession);
-            //$cookieStore.put('userCookies', userCookies);
-            console.log('userSession', userSession);
-            $scope.init();
-            $state.go('welcomepage');
-          } else if (res.status === false) {
-            console.log("login failed");
-          }
-        }).error(function() {
-          console.log("Connection Problem.");
-        });
+    $scope.userlogin = function(user,valid) {
+      if(valid){
+          $http.post(baseUrl + 'login',user).success(function(res, req) {
+            if (res.status == true) {
+              var userSession = {
+                'login': true,
+                'userid': res.record[0].id,
+                'user_email': res.record[0].user_email,
+                'user_name': res.record[0].user_name
+              };
+              store.set('userSession', userSession);
+              $scope.init();
+              $state.go('welcomepage');
+            } else if (res.status === false) {
+              console.log("login failed");
+              $scope.loginfailuremsg = 'Please Enter Valid Email Address and Password';
+              $scope.showloginfailuremsg = true;
+              
+              // Simulate 2 seconds loading delay
+              $timeout(function() {
+                  // Loadind done here - Show message for 3 more seconds.
+                  $timeout(function() {
+                    $scope.showloginfailuremsg = false;
+                  }, 3000);
+                }, 2000);
+              }
+          }).error(function() {
+            console.log("Connection Problem.");
+          });
+        }
     };
 
     /**

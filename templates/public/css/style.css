@@ -22,3 +22,20 @@
 .comman_border {
 	border: 1px solid #efefef;
 }
+.error_msg{
+	font-size: 11px;
+    margin-left: 10px;
+    color: maroon;
+}
+.success_msg{
+	font-size: 11px;
+    margin-left: 10px;
+    color: maroon;
+}
+.login_err_msg{
+	text-align: center;
+	font-size: 11px;
+    margin-left: 10px;
+    color: maroon;
+    margin-top: 10px;
+}

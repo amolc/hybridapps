@@ -16,11 +16,7 @@ angular.module('starter.controllers', [])
       };
      }  
   }
-
-  $scope.data = {
-      user_email: '' ,
-      user_password:''
-  };
+  
 
   /**
     @function for addUpdateTodos
@@ -29,7 +25,8 @@ angular.module('starter.controllers', [])
     @initialDate
     @lastDate
   */
- 
+    $scope.reminder = {};
+
     $scope.addUpdateReminder = function(reminder,valid) {
       if(valid){
           if ($stateParams.todo_id)
@@ -47,14 +44,14 @@ angular.module('starter.controllers', [])
    @initialDate
    @lastDate
   */
-    $scope.reminder_data = {};
+    
     $scope.addReminder = function(reminder) {
      
-      $scope.reminder_data = {
+      $scope.reminder = {
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid
       }
-      $http.post(baseUrl + 'addtodos',$scope.reminder_data).success(function(res, req) {
+      $http.post(baseUrl + 'addtodos',$scope.reminder).success(function(res, req) {
       if(res.status == true){
          
           $scope.reminderaddmsg = 'Reminder Added Successfully';
@@ -65,11 +62,14 @@ angular.module('starter.controllers', [])
             $timeout(function() {
               $scope.showreminderaddmsg = false;
             }, 3000);
+             $state.go('tab.addreminder');
           }, 2000);
 
-        $scope.reminder_data = {};
+        $scope.reminder.todo_data = "";
+        $scope.reminder = {};
         $scope.getreminders();
-        $location.path('/tab/addreminder/');
+
+        //$location.path('/tab/addreminder/');
       }else{
          console.log("Reminder Failes to Add");
       }
