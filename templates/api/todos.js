@@ -6,9 +6,16 @@ var connection = env.Dbconnection;
 var todosCRUD = CRUD(connection,'todos');
 
 exports.addtodos = function(req,res){
+	var rem_Date = req.body.reminder_date;
+    var startTime = new Date(rem_Date);
+    var reminderdate = startTime.getTime();
+
   	  todosCRUD.create({
   	  	'todo_data':req.body.todo_data,
-  	  	'user_id':req.body.user_id
+  	  	'user_id':req.body.user_id,
+  	  	'reminder_date':reminderdate,
+  	  	'created_on':env.timestamp(),
+  	  	'modified_on':env.timestamp()
   	  },function(error, result) {
 	    if (result) {
 	      responsedata = {
@@ -74,10 +81,16 @@ exports.gettododetails = function(req,res){
 }
 
 exports.updatetodos = function(req,res){
+	 var rem_Date = req.body.reminder_date;
+     var startTime = new Date(rem_Date);
+     var reminderdate = startTime.getTime();
+  	  
   	  todosCRUD.update({
   	  	'todo_id':req.body.todo_id,
   	  },{
-  	  	'todo_data':req.body.todo_data
+  	  	'todo_data':req.body.todo_data,
+  	  	'reminder_date':reminderdate,
+  	  	'modified_on':env.timestamp()
   	  },function(error, result) {
 	    if (result) {
 	      responsedata = {

@@ -9,25 +9,30 @@ angular.module('DemoApp').controller('usercontroller', [
   'store',
   function($scope, $http, $stateParams, $location, $rootScope,$state, $timeout,store) {
     
-    //$scope.userCookies = $cookieStore.get('userCookies') || {};
-    
     
     $scope.init = function() {
       
       $scope.userSession = store.get('userSession');
       $scope.gettodos();
-      $scope.gettododetails();
+     if($stateParams.todo_id)
+      {
+        $scope.gettododetails($stateParams.todo_id);
+      }
 
     }
-      
+    
       $scope.stateParams = $stateParams.todo_id;
       $scope.IsVisible = false;
+      $scope.IsCalVisible = false;
       
     $scope.ShowHide = function () {
       //If form is visible it will be hidden and vice versa.
       $scope.IsVisible = $scope.IsVisible ? false : true;
     }
 
+    $scope.ShowHidecal = function () {
+      $scope.IsCalVisible = $scope.IsCalVisible ? false : true;
+    }
     /**
       @function for addUpdateTodos
       @param {int} first - todo_id
@@ -55,8 +60,10 @@ angular.module('DemoApp').controller('usercontroller', [
     $scope.addtodos = function(data) {
       var tododata = {
         todo_data : data.todo_data,
-        user_id: $scope.userSession.userid
+        user_id: $scope.userSession.userid,
+        reminder_date:data.reminder_date
       }
+      console.log("tododata:",tododata);
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
         if(res.status == true){
           $scope.gettodos();
@@ -88,7 +95,8 @@ angular.module('DemoApp').controller('usercontroller', [
     $scope.updatetodos = function(data) {
       var tododata = {
         todo_data : data.todo_data,
-       todo_id: $stateParams.todo_id
+        todo_id: $stateParams.todo_id,
+        reminder_date:data.reminder_date
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
        if(res.status == true){
@@ -111,6 +119,7 @@ angular.module('DemoApp').controller('usercontroller', [
       });
     }
 
+ 
     /**
      @function gettododetails
      @type post
@@ -124,6 +133,7 @@ angular.module('DemoApp').controller('usercontroller', [
       }
       $http.post(baseUrl + 'gettododetails',tododata).success(function(res, req) {
         $scope.data = res.record[0];
+        console.log("data:",$scope.data.reminder_date);
       }).error(function() {
         console.log("Connection Problem.");
       });
