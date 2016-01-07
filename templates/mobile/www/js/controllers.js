@@ -46,10 +46,11 @@ angular.module('starter.controllers', [])
   */
     
     $scope.addReminder = function(reminder) {
-     
+     console.log("reminder:",reminder);
       $scope.reminder = {
         todo_data : reminder.todo_data,
-        user_id: $scope.usersession.userid
+        user_id: $scope.usersession.userid,
+        reminder_date: reminder.reminder_date
       }
       $http.post(baseUrl + 'addtodos',$scope.reminder).success(function(res, req) {
       if(res.status == true){
@@ -150,6 +151,7 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'gettododetails',tododata).success(function(res, req) {
         $scope.reminder = res.record[0];
+        
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -193,7 +195,31 @@ angular.module('starter.controllers', [])
       }).error(function() {
         console.log("Connection Problem.");
       });
+    };
+
+      $scope.datepickerObject = {
+      callback: function (val) {  //Mandatory
+        //datePickerCallback(val);
+        console.log("DAte:",val);
+        $scope.datedate = val;
+      },
     };  
+
+    $scope.timePickerObject = {
+      inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
+      step: 15,  //Optional
+      format: 12,  //Optional
+      titleLabel: '12-hour Format',  //Optional
+      setLabel: 'Set',  //Optional
+      closeLabel: 'Close',  //Optional
+      setButtonType: 'button-positive',  //Optional
+      closeButtonType: 'button-stable',  //Optional
+      callback: function (val) {    //Mandatory
+        //timePickerCallback(val);
+        $scope.timedata = val;
+        console.log("timedata:", $scope.timedata);
+      }
+    };
 
 })
 

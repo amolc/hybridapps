@@ -57,12 +57,14 @@ angular.module('starter.controllers')
     */
    
     $scope.usersignout = function() {
+      console.log("userDetail:",'userDetail');
       store.remove('userDetail');
       $scope.data.user_email = "";
       $scope.data.user_password = "";
-      //$window.location.reload(true)
+      $window.location.reload(true);
        document.getElementById("loginfrm").reset();
       $location.path('/login')
+      ;
     };
 
 })

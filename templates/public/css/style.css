@@ -48,3 +48,14 @@
     right: 0px;
     bottom: 6px;
 }
+
+table.md-calendar {
+    width: auto;
+    margin: 0px;
+}
+div#md-date-pane0 {
+    width: 347px;
+}
+table.md-calendar-day-header {
+    margin: 0px;
+}

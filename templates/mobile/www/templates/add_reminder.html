@@ -1,8 +1,11 @@
 <ion-view view-title="Dashboard" ng-init="init()">
+  <ion-nav-bar class="bar bar-header bar-calm">
+    <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
   <ion-content class="padding">
     <div class="row" ng-controller="logincontroller">
       <div class="col-100 col-offset-60" style="margin-left: 70%;">
-        <button  class="button button-positive" ng-click="usersignout()">Logout</button>
+        <button  class="button" ng-click="usersignout()">Logout</button>
       </div>
     </div>
     <div class="list card">
@@ -13,21 +16,45 @@
                 <label class="item-input-wrapper">
                   <input type="text" placeholder="Add Reminder" ng-model="reminder.todo_data" name="add_reminder" required>
                 </label>
-                <button class="button button-small" type="submit" ng-if="stateParams == '' ">Add</button>
-                <button class="button button-small" type="submit" ng-if="stateParams != '' ">Update</button>
             </div>
-            <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.add_reminder.$error" role="alert" class="error_msg" ng-if="addreminderfrm.add_reminder.$error">
+            <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.add_reminder.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.add_reminder.$error">
               <div data-ng-message="required">Please Enter Reminder </div>
             </div>
-            <div ng-model="reminderaddmsg" ng-show="showreminderaddmsg" class="success_msg">{{reminderaddmsg}}</div>
-            <div ng-model="reminderupdatemsg" ng-show="showreminderupdatemsg" class="success_msg">{{reminderupdatemsg}}</div>
+            <div class="item item-input-inset">
+              <label class="item-input-wrapper">
+                 <input type="date" ng-model="reminder.reminder_date" name="reminderdate"required> 
+              </label>
+            </div>
+            <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.reminderdate.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.reminderdate.$error">
+              <div data-ng-message="required">Please Select Date</div>
+            </div>
+<!--             <ionic-datepicker input-obj="datepickerObject">
+              <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
+            </ionic-datepicker> -->
+            <ionic-datepicker input-obj="datepickerObject">
+              <button class="button button-block button-positive"> <label>Date :</label>  {{datedate  | date:'mediumDate'}}</button>
+            </ionic-datepicker>
+
+            <ionic-timepicker input-obj="timePickerObject">
+              <button class="button button-block button-positive overflowShow">
+                <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian> Time : {{timedata | date:'shortTime'}}
+              </button>
+            </ionic-timepicker>
+
+            <div>
+              <button class="button button-positive" type="submit" ng-if="stateParams == '' ">Add</button>
+              <button class="button button-positive" type="submit" ng-if="stateParams != '' ">Update</button>
+            </div>
+
+            <div ng-model="reminderaddmsg" ng-show="showreminderaddmsg" class="balanced">{{reminderaddmsg}}</div>
+            <div ng-model="reminderupdatemsg" ng-show="showreminderupdatemsg" class="balanced">{{reminderupdatemsg}}</div>
         </div>
       </form>
     </div>
     <div class="list card">
       <div class="item item-divider">Reminder list</div>
     </div>
-    <div ng-model="reminderdeletemsg" ng-show="showreminderdeletemsg" class="success_msg">{{reminderdeletemsg}}</div>
+    <div ng-model="reminderdeletemsg" ng-show="showreminderdeletemsg" class="balanced">{{reminderdeletemsg}}</div>
     <div>
         <ul ng-repeat="reminder in reminderlist">
           <li class="item">

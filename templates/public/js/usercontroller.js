@@ -61,10 +61,11 @@ angular.module('DemoApp').controller('usercontroller', [
       var tododata = {
         todo_data : data.todo_data,
         user_id: $scope.userSession.userid,
-        reminder_date:data.reminder_date
+        reminder_date:data.reminderdate,
+        reminder_time:data.remindertime
       }
-      console.log("tododata:",tododata);
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
+        console.log("res:",res);
         if(res.status == true){
           $scope.gettodos();
           $scope.IsVisible = false;
@@ -96,7 +97,8 @@ angular.module('DemoApp').controller('usercontroller', [
       var tododata = {
         todo_data : data.todo_data,
         todo_id: $stateParams.todo_id,
-        reminder_date:data.reminder_date
+        reminder_date:data.reminderdate,
+        reminder_time:data.remindertime
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
        if(res.status == true){
@@ -133,7 +135,7 @@ angular.module('DemoApp').controller('usercontroller', [
       }
       $http.post(baseUrl + 'gettododetails',tododata).success(function(res, req) {
         $scope.data = res.record[0];
-        console.log("data:",$scope.data.reminder_date);
+        console.log("data:",$scope.data);
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -197,7 +199,26 @@ angular.module('DemoApp').controller('usercontroller', [
         console.log("Connection Problem.");
       });
     };  
+      
+   /***angular material date picker
+    $scope.myDate = new Date();
+    console.log($scope.myDate);
+  
+    $scope.minDate = new Date(
+      $scope.myDate.getFullYear(),
+      $scope.myDate.getMonth() - 2,
+      $scope.myDate.getDate());
 
+    $scope.maxDate = new Date(
+      $scope.myDate.getFullYear(),
+      $scope.myDate.getMonth() + 2,
+      $scope.myDate.getDate());
+  
+    $scope.onlyWeekendsPredicate = function(date) {
+      var day = date.getDay();
+      return day === 0 || day === 6;
+    }
 
+  **/
   }
 ]);

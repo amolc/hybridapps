@@ -6,14 +6,19 @@ var connection = env.Dbconnection;
 var todosCRUD = CRUD(connection,'todos');
 
 exports.addtodos = function(req,res){
-	var rem_Date = req.body.reminder_date;
+/*	var rem_Date = req.body.reminder_date;
     var startTime = new Date(rem_Date);
     var reminderdate = startTime.getTime();
+
+   	var rem_time = req.body.reminder_time;
+    var Time = new Date(rem_Date);
+    var remindertime = Time.getTime();*/
 
   	  todosCRUD.create({
   	  	'todo_data':req.body.todo_data,
   	  	'user_id':req.body.user_id,
-  	  	'reminder_date':reminderdate,
+  	  	'reminder_date':req.body.reminder_date,
+  	  	'reminder_time':req.body.reminder_time,
   	  	'created_on':env.timestamp(),
   	  	'modified_on':env.timestamp()
   	  },function(error, result) {
@@ -81,15 +86,16 @@ exports.gettododetails = function(req,res){
 }
 
 exports.updatetodos = function(req,res){
-	 var rem_Date = req.body.reminder_date;
+	/* var rem_Date = req.body.reminder_date;
      var startTime = new Date(rem_Date);
-     var reminderdate = startTime.getTime();
+     var reminderdate = startTime.getTime();*/
   	  
   	  todosCRUD.update({
   	  	'todo_id':req.body.todo_id,
   	  },{
   	  	'todo_data':req.body.todo_data,
-  	  	'reminder_date':reminderdate,
+  	  	'reminder_date':req.body.reminder_date,
+  	  	'reminder_time':req.body.reminder_time,
   	  	'modified_on':env.timestamp()
   	  },function(error, result) {
 	    if (result) {
