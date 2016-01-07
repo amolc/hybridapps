@@ -10,13 +10,11 @@ angular.module('starter.controllers', [])
       $scope.stateParams = $stateParams.todo_id;
       $scope.getreminderdetails($stateParams); 
      }else{
-      $scope.reminder = {
-        todo_id : '',
-        todo_data : ""
-      };
+  
      }  
   }
   
+    
 
   /**
     @function for addUpdateTodos
@@ -25,7 +23,7 @@ angular.module('starter.controllers', [])
     @initialDate
     @lastDate
   */
-    $scope.reminder = {};
+    //$scope.reminder = {};
 
     $scope.addUpdateReminder = function(reminder,valid) {
       if(valid){
@@ -46,12 +44,14 @@ angular.module('starter.controllers', [])
   */
     
     $scope.addReminder = function(reminder) {
-     console.log("reminder:",reminder);
       $scope.reminder = {
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid,
-        reminder_date: reminder.reminder_date
+        reminder_date:  $scope.datepickerObject.inputDate,
+        //reminder_time: $scope.timePickerObject.inputEpochTime
+        reminder_time: reminder.remindertime
       }
+      console.log($scope.reminder);
       $http.post(baseUrl + 'addtodos',$scope.reminder).success(function(res, req) {
       if(res.status == true){
          
@@ -66,9 +66,6 @@ angular.module('starter.controllers', [])
               document.getElementById("addreminderform").reset();
              $state.go('tab.addreminder');
           }, 2000);
-
-        $scope.reminder.todo_data = "";
-        $scope.reminder = {};
         $scope.getreminders();
 
         //$location.path('/tab/addreminder/');
@@ -91,7 +88,9 @@ angular.module('starter.controllers', [])
     $scope.updateReminder = function(reminder,valid) {
       var tododata = {
         todo_data : reminder.todo_data,
-        todo_id: $stateParams.todo_id
+        todo_id: $stateParams.todo_id,
+        reminder_date:  $scope.datepickerObject.inputDate,
+        reminder_time: $scope.timePickerObject.inputEpochTime
       }
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
@@ -197,29 +196,65 @@ angular.module('starter.controllers', [])
       });
     };
 
-      $scope.datepickerObject = {
-      callback: function (val) {  //Mandatory
-        //datePickerCallback(val);
-        console.log("DAte:",val);
-        $scope.datedate = val;
-      },
-    };  
+   $scope.datepickerObject = {
+        titleLabel: 'Title',  //Optional
+        todayLabel: 'Today',  //Optional
+        closeLabel: 'Close',  //Optional
+        setLabel: 'Set',  //Optional
+        setButtonType : 'button-assertive',  //Optional
+        todayButtonType : 'button-assertive',  //Optional
+        closeButtonType : 'button-assertive',  //Optional
+        inputDate: new Date(),  //Optional
+        mondayFirst: true,  //Optional
+        templateType: 'popup', //Optional
+        showTodayButton: 'true', //Optional
+        modalHeaderColor: 'bar-positive', //Optional
+        modalFooterColor: 'bar-positive', //Optional
+        callback: function (val) {  //Mandatory
+          datePickerCallback(val);
+          console.log("val:",val);
+        }
+      };
 
-    $scope.timePickerObject = {
-      inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
-      step: 15,  //Optional
-      format: 12,  //Optional
-      titleLabel: '12-hour Format',  //Optional
-      setLabel: 'Set',  //Optional
-      closeLabel: 'Close',  //Optional
-      setButtonType: 'button-positive',  //Optional
-      closeButtonType: 'button-stable',  //Optional
-      callback: function (val) {    //Mandatory
-        //timePickerCallback(val);
-        $scope.timedata = val;
-        console.log("timedata:", $scope.timedata);
+      var datePickerCallback = function (val) {
+          if (typeof(val) === 'undefined') {
+            console.log('No date selected');
+          } else {
+            $scope.datepickerObject.inputDate = val;
+            console.log('Selected date is : ', val)
+          }
+      };
+
+      $scope.timePickerObject = {
+        inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
+        //inputEpochTime: new Date(),
+        step: 15,  //Optional
+        format: 12,  //Optional
+        titleLabel: '12-hour Format',  //Optional
+        setLabel: 'Set',  //Optional
+        closeLabel: 'Close',  //Optional
+        setButtonType: 'button-positive',  //Optional
+        closeButtonType: 'button-stable',  //Optional
+        callback: function (val) {    //Mandatory
+          timePickerCallback(val);
+          console.log(val);
+
+        }
+      };
+      console.log($scope.timePickerObject.inputEpochTime);
+
+    function timePickerCallback(val) {
+      if (typeof (val) === 'undefined') {
+        console.log('Time not selected');
+      } else {
+        var selectedTime = new Date(val * 1000);
+        $scope.remindertime = selectedTime.getUTCHours() + " : " + selectedTime.getUTCMinutes();
+        console.log("$scope.timedata:",$scope.remindertime);
+        console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
       }
-    };
+    }
+
+
 
 })
 

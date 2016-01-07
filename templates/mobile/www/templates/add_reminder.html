@@ -20,27 +20,29 @@
             <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.add_reminder.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.add_reminder.$error">
               <div data-ng-message="required">Please Enter Reminder </div>
             </div>
-            <div class="item item-input-inset">
+            <!-- <div class="item item-input-inset">
               <label class="item-input-wrapper">
                  <input type="date" ng-model="reminder.reminder_date" name="reminderdate"required> 
               </label>
             </div>
             <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.reminderdate.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.reminderdate.$error">
               <div data-ng-message="required">Please Select Date</div>
-            </div>
-<!--             <ionic-datepicker input-obj="datepickerObject">
-              <button class="button button-block button-positive"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-            </ionic-datepicker> -->
+            </div> -->
             <ionic-datepicker input-obj="datepickerObject">
-              <button class="button button-block button-positive"> <label>Date :</label>  {{datedate  | date:'mediumDate'}}</button>
+              <div class="card"> <span>Date:
+                <label>{{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</label>
+                </span></div>
             </ionic-datepicker>
 
             <ionic-timepicker input-obj="timePickerObject">
-              <button class="button button-block button-positive overflowShow">
-                <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian> Time : {{timedata | date:'shortTime'}}
-              </button>
+              <div class="card"> <span>Time:
+                <standard-time-meridian etime='timePickerObject.inputEpochTime'><label ng-if="!remindertime"> {{timePickerObject.inputEpochTime | date : 'hh:mm a' }}</label></standard-time-meridian>{{remindertime}}
+                </span>
+              </div>  
             </ionic-timepicker>
-
+           <!--  <div class="card">
+              <input type="time" ng-model="reminder.remindertime">
+            </div> -->
             <div>
               <button class="button button-positive" type="submit" ng-if="stateParams == '' ">Add</button>
               <button class="button button-positive" type="submit" ng-if="stateParams != '' ">Update</button>

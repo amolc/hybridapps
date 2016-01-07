@@ -64,6 +64,7 @@ angular.module('DemoApp').controller('usercontroller', [
         reminder_date:data.reminderdate,
         reminder_time:data.remindertime
       }
+      console.log("tododata:",tododata);
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
         console.log("res:",res);
         if(res.status == true){
