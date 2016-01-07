@@ -48,8 +48,8 @@ angular.module('starter.controllers', [])
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid,
         reminder_date:  $scope.datepickerObject.inputDate,
-        //reminder_time: $scope.timePickerObject.inputEpochTime
-        reminder_time: reminder.remindertime
+        reminder_time: $scope.timePickerObject.inputEpochTime
+        //reminder_time: reminder.remindertime
       }
       console.log($scope.reminder);
       $http.post(baseUrl + 'addtodos',$scope.reminder).success(function(res, req) {
