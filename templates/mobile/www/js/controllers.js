@@ -141,6 +141,7 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
         $scope.reminderlist = res.record;
+        console.log("reminderlist:",$scope.reminderlist);
         //console.log("$scope.reminderlist:",$scope.reminderlist);
       }).error(function() {
         console.log("Connection Problem.");

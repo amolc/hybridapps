@@ -64,7 +64,9 @@
     <div>
         <ul ng-repeat="reminder in reminderlist">
           <li class="item">
-             <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})" ng-click="ShowHide()"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}}
+             <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})" ng-click="ShowHide()"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}} <br>
+             <label class="date_margin"> {{reminder.reminder_date | date:"MMM d, y"}} </label> |
+             <label class="time">{{reminder.reminder_time | date:"shortTime"}}</label> 
           </li>
         </ul>
     </div>
