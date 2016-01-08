@@ -135,5 +135,6 @@ exports.deletetodo = function(req,res){
 	      }
 	      res.jsonp(responsedata);
 	    }
+	    
   });
 }	
