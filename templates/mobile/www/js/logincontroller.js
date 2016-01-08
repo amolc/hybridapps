@@ -59,9 +59,9 @@ angular.module('starter.controllers')
     $scope.usersignout = function() {
       store.remove('userDetail');
       //$window.location.reload(true);
-       document.getElementById("loginfrm").reset();
-      $location.path('/login')
-      ;
+       
+      $location.path('/login');
+      document.getElementById("loginfrm").reset();
     };
 
 })

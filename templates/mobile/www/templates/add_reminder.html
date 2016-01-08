@@ -1,14 +1,18 @@
 <ion-view view-title="Dashboard" ng-init="init()">
   <ion-nav-bar class="bar bar-header bar-calm">
-    <ion-nav-back-button></ion-nav-back-button>
+     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
   <ion-content class="padding">
     <div class="row" ng-controller="logincontroller">
-      <div class="col-100 col-offset-60" style="margin-left: 70%;">
-        <button  class="button" ng-click="usersignout()">Logout</button>
+      <div class="col-80">
+        <label>Welcome Have a Great Day</label>
+      </div>
+      <div class="col-20">
+        <button class="button" ng-click="usersignout()">Logout</button>
       </div>
     </div>
-    <div class="list card">
+    <label ng-click="ShowHide()"><i class="ion-plus"></i>Add Reminder</label>
+    <div class="list card" ng-show = "IsVisible">
       <div class="item item-divider">Add Reminder Here</div>
       <form ng-submit="addUpdateReminder(reminder,addreminderfrm.$valid)" name="addreminderfrm" id="addreminderform" novalidate>
         <div class="item item-body">
@@ -28,7 +32,7 @@
             <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.reminderdate.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.reminderdate.$error">
               <div data-ng-message="required">Please Select Date</div>
             </div> -->
-            <ionic-datepicker input-obj="datepickerObject">
+            <ionic-datepicker input-obj="datepickerObject" ng-model="reminder.reminder_date">
               <div class="card"> <span>Date:
                 <label>{{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</label>
                 </span></div>
@@ -36,7 +40,7 @@
 
             <ionic-timepicker input-obj="timePickerObject">
               <div class="card"> <span>Time:
-                <standard-time-meridian etime='timePickerObject.inputEpochTime'><label ng-if="!remindertime"> {{timePickerObject.inputEpochTime | date : 'hh:mm a' }}</label></standard-time-meridian>{{remindertime}}
+                <standard-time-meridian etime='timePickerObject.inputEpochTime'><label ng-if="!remindertime"> {{currenttime |  date:"DD/mm/yyyy 'at' h:mma"}}</label></standard-time-meridian>{{time12hr}}
                 </span>
               </div>  
             </ionic-timepicker>
@@ -60,7 +64,7 @@
     <div>
         <ul ng-repeat="reminder in reminderlist">
           <li class="item">
-             <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}}
+             <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})" ng-click="ShowHide()"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}}
           </li>
         </ul>
     </div>

@@ -6,7 +6,7 @@ var ApplicationModuleName = 'DemoApp';
 
 
 // Create the main application
-var SampleApplicationModule = angular.module('DemoApp', ['ui.router','angular-storage','ngMessages','ui.bootstrap.datetimepicker','ngMaterial','ngMaterialDatePicker']);
+var SampleApplicationModule = angular.module('DemoApp', ['ui.router','angular-storage','ngMessages','ngMaterial','ngMaterialDatePicker']);
 
 SampleApplicationModule.config(['$urlRouterProvider', '$stateProvider','storeProvider', function($urlRouterProvider, $stateProvider , storeProvider) {
   storeProvider.setStore('sessionStorage');

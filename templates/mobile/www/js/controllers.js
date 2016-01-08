@@ -8,13 +8,17 @@ angular.module('starter.controllers', [])
 
      if($stateParams){
       $scope.stateParams = $stateParams.todo_id;
-      $scope.getreminderdetails($stateParams); 
-     }else{
-  
-     }  
+      $scope.getreminderdetails($stateParams.todo_id); 
+     }
+
   }
-  
-    
+
+    $scope.IsVisible = false;
+
+    $scope.ShowHide = function () {
+      //If form is visible it will be hidden and vice versa.
+      $scope.IsVisible = $scope.IsVisible ? false : true;
+    }
 
   /**
     @function for addUpdateTodos
@@ -23,7 +27,6 @@ angular.module('starter.controllers', [])
     @initialDate
     @lastDate
   */
-    //$scope.reminder = {};
 
     $scope.addUpdateReminder = function(reminder,valid) {
       if(valid){
@@ -48,7 +51,7 @@ angular.module('starter.controllers', [])
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid,
         reminder_date:  $scope.datepickerObject.inputDate,
-        reminder_time: $scope.timePickerObject.inputEpochTime
+        reminder_time: $scope.time12hr
         //reminder_time: reminder.remindertime
       }
       console.log($scope.reminder);
@@ -65,16 +68,20 @@ angular.module('starter.controllers', [])
             }, 3000);
               document.getElementById("addreminderform").reset();
              $state.go('tab.addreminder');
+             $scope.IsVisible = false;
           }, 2000);
         $scope.getreminders();
+      
 
         //$location.path('/tab/addreminder/');
       }else{
          console.log("Reminder Failes to Add");
       }
+          
       }).error(function() {
         console.log("Connection Problem.");
       });
+
     }
 
   /**
@@ -105,14 +112,15 @@ angular.module('starter.controllers', [])
             }, 3000);
              document.getElementById("addreminderform").reset();
              $location.path('/tab/addreminder/');
+              //$scope.IsVisible = true;
               $scope.getreminders(); 
-             //$location.path('/tab/addreminder/');
+             //$scope.IsVisible = false;
           }, 2000);
-           
-          
+
         }else{
           console.log("Reminder Failed To Update");
         }
+         $scope.IsVisible = false;
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -127,11 +135,13 @@ angular.module('starter.controllers', [])
      @lastDate
    */
     $scope.getreminders = function() {
+
       var reminderdata = {
         user_id: $scope.usersession.userid
       }
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
         $scope.reminderlist = res.record;
+        //console.log("$scope.reminderlist:",$scope.reminderlist);
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -150,7 +160,6 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'gettododetails',tododata).success(function(res, req) {
         $scope.reminder = res.record[0];
-        
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -212,7 +221,7 @@ angular.module('starter.controllers', [])
         modalFooterColor: 'bar-positive', //Optional
         callback: function (val) {  //Mandatory
           datePickerCallback(val);
-          console.log("val:",val);
+          //console.log("val:",val);
         }
       };
 
@@ -221,13 +230,12 @@ angular.module('starter.controllers', [])
             console.log('No date selected');
           } else {
             $scope.datepickerObject.inputDate = val;
-            console.log('Selected date is : ', val)
+            //console.log('Selected date is : ', val)
           }
       };
 
       $scope.timePickerObject = {
         inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
-        //inputEpochTime: new Date(),
         step: 15,  //Optional
         format: 12,  //Optional
         titleLabel: '12-hour Format',  //Optional
@@ -237,20 +245,38 @@ angular.module('starter.controllers', [])
         closeButtonType: 'button-stable',  //Optional
         callback: function (val) {    //Mandatory
           timePickerCallback(val);
-          console.log(val);
-
         }
       };
-      console.log($scope.timePickerObject.inputEpochTime);
+      
+    /**** code for current time and with am/pm ***/
+
+      var current_date = new Date();
+      var hours = current_date.getHours();
+      var minutes = current_date.getMinutes();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0'+minutes : minutes;
+      $scope.currenttime = hours + ':' + minutes + ' ' + ampm;
+
+    /****   End of code for current time ***/
+      
 
     function timePickerCallback(val) {
       if (typeof (val) === 'undefined') {
         console.log('Time not selected');
       } else {
         var selectedTime = new Date(val * 1000);
+        //console.log("selectedTime:",selectedTime);
         $scope.remindertime = selectedTime.getUTCHours() + " : " + selectedTime.getUTCMinutes();
-        console.log("$scope.timedata:",$scope.remindertime);
-        console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+        //console.log("getUTCHours:",selectedTime.getUTCHours());
+        var time24 = selectedTime.getUTCHours();
+        suffix = time24 >= 12 ? "PM":"AM";
+        time24 = ((time24 + 11) % 12 + 1);
+        $scope.time12hr = time24 + ":" + selectedTime.getUTCMinutes() + " " + suffix;
+        //console.log("$scope.time12hr:",$scope.time12hr);
+        //console.log("$scope.timedata:",$scope.remindertime);
+        //console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
       }
     }
 
