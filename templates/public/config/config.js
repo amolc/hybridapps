@@ -1,9 +1,10 @@
-/*if (document.location.hostname == "node.fountaintechies.com" ){
-	var baseUrl = "http://localhost:3000/";
+if (document.location.hostname == "node.fountaintechies.com" ){
+	var baseUrl = "http://node.fountaintechies.com:5555/api/";
 
 } else {
 
-	var baseUrl = "http://localhost:3000/";
+	var baseUrl = "http://localhost:5555/api/";
 	
-}*/
-var baseUrl = "http://localhost:3000/api/";
+}
+
+
