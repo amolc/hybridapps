@@ -72,4 +72,13 @@ app.post('/api/gettododetails',todos.gettododetails);
 app.post('/api/updatetodos',todos.updatetodos);
 app.post('/api/deletetodo',todos.deletetodo);
 
+app.post('/register', function(req, res){
+    device_token = req.body.device_token;
+    console.log('device token received');
+    console.log(device_token);
+    /*YOUR TODO: save the device_token into your database*/
+    res.send('ok');
+});
+
+
 module.exports = app;
