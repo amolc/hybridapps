@@ -29,6 +29,24 @@ exports.deviceregister = function(req,res){
 		  	  	'modified_on':env.timestamp()
 		  	  },function(error, result) {
 			    if (result) {
+			    	
+			    	var device_token;
+			    	var sender = new gcm.Sender(419937285756); //create a new sender
+    				var message = new gcm.Message(); //create a new message
+
+    				message.addData('title', 'New Message');
+    				message.addData('message', 'Mobile Register successfully');
+    				message.addData('sound', 'notification');
+
+				    message.collapseKey = 'testing'; //grouping messages
+				    message.delayWhileIdle = true; //delay sending while receiving device is offline
+				    message.timeToLive = 3; //the number of seconds to keep the message on the server if the device is offline
+			     	
+			     	sender.send(message, device_token, function(result){
+        				console.log(result);
+        				console.log('push sent to: ' + device_token);
+    				});
+
 			      responsedata = {
 			        status: true,
 			        record: result,
