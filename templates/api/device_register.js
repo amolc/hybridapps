@@ -30,7 +30,7 @@ exports.deviceregister = function(req,res){
 		  	  },function(error, result) {
 			    if (result) {
 			    	var gcm = require('node-gcm');
-			    	var deviceid = req.body.deviceid;
+			    	var device_token = req.body.device_token;
 			    	var sender = new gcm.Sender(419937285756); //create a new sender
     				var message = new gcm.Message(); //create a new message
 
@@ -42,9 +42,9 @@ exports.deviceregister = function(req,res){
 				    message.delayWhileIdle = true; //delay sending while receiving device is offline
 				    message.timeToLive = 3; //the number of seconds to keep the message on the server if the device is offline
 			     	
-			     	sender.send(message, deviceid, function(result){
+			     	sender.send(message, device_token, function(result){
         				console.log(result);
-        				console.log('push sent to: ' + deviceid);
+        				console.log('push sent to: ' + device_token);
     				});
 
 			      responsedata = {
