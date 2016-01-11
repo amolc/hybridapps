@@ -29,7 +29,7 @@ exports.deviceregister = function(req,res){
 		  	  	'modified_on':env.timestamp()
 		  	  },function(error, result) {
 			    if (result) {
-			    	var gcm = require('node-gcm');
+/*			    	var gcm = require('node-gcm');
 			    	var device_token = req.body.device_token;
 			    	var sender = new gcm.Sender(419937285756); //create a new sender
     				var message = new gcm.Message(); //create a new message
@@ -45,7 +45,7 @@ exports.deviceregister = function(req,res){
 			     	sender.send(message, device_token, function(result){
         				console.log(result);
         				console.log('push sent to: ' + device_token);
-    				});
+    				});*/
 
 			      responsedata = {
 			        status: true,

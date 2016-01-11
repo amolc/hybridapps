@@ -200,26 +200,7 @@ angular.module('DemoApp').controller('usercontroller', [
         console.log("Connection Problem.");
       });
     };  
-      
-   /***angular material date picker
-    $scope.myDate = new Date();
-    console.log($scope.myDate);
-  
-    $scope.minDate = new Date(
-      $scope.myDate.getFullYear(),
-      $scope.myDate.getMonth() - 2,
-      $scope.myDate.getDate());
 
-    $scope.maxDate = new Date(
-      $scope.myDate.getFullYear(),
-      $scope.myDate.getMonth() + 2,
-      $scope.myDate.getDate());
-  
-    $scope.onlyWeekendsPredicate = function(date) {
-      var day = date.getDay();
-      return day === 0 || day === 6;
+
     }
-
-  **/
-  }
 ]);
