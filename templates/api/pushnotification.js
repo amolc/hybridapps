@@ -8,7 +8,7 @@
     				var message = new gcm.Message(); //create a new message
 
     				message.addData('title', 'New Message');
-    				message.addData('message', 'Mobile Register successfully');
+    				message.addData('message', 'Push Notification sample');
     				message.addData('sound', 'notification');
 
 				    message.collapseKey = 'testing'; //grouping messages
