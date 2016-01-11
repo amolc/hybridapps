@@ -58,6 +58,7 @@ app.use('/api', express.static(__dirname + '/api'));
 
 var userlogin = require('./api/userlogin.js');
 var todos = require('./api/todos.js');
+var device_register = require('./api/device_register.js');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -71,14 +72,7 @@ app.post('/api/gettodos',todos.gettodos);
 app.post('/api/gettododetails',todos.gettododetails);
 app.post('/api/updatetodos',todos.updatetodos);
 app.post('/api/deletetodo',todos.deletetodo);
-
-app.post('/register', function(req, res){
-    device_token = req.body.device_token;
-    console.log('device token received');
-    console.log(device_token);
-    /*YOUR TODO: save the device_token into your database*/
-    res.send('ok');
-});
+app.post('/api/deviceregister',device_register.deviceregister);
 
 
 module.exports = app;
