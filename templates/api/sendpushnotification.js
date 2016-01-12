@@ -11,7 +11,8 @@ var deviceCrud  = CRUD(connection,'device_information');
 
 exports.sendnotification = function(req,res){
 	console.log(req.body);
-	var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id where userid = req.body.user_id";
+	var userid = req.body.user_id;
+	var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id where userid ="+userid;
 	console.log("query1:",query1);
 	connection.query(query1, function( error , result ){
       if(result ){
