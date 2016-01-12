@@ -24,7 +24,8 @@ exports.sendnotification = function(req,res){
               message:'Failed to get data'
           }
       }
-      console.log(result)
+      console.log(result);
+      console.log(error);
       res.jsonp( responsedata );
     });
 
