@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var prompt = require('prompt');
 var program = require('commander');
 var mkdirp = require('mkdirp');
 var os = require('os');
@@ -13,242 +14,284 @@ var cpkg = require('../package.json');
 var version = cpkg.version;
 var _exit = process.exit;
 var eol = os.EOL;
-var fse = require('fs-extra')
+var fse = require('fs-extra');
 
+var schema = {
+  properties: {
+    database:  {
+      description: 'Enter your database name',     // Prompt displayed to the user. If not supplied name will be used.
+      type: 'string',                 // Specify the type of input to expect.
+    },
+    host:  {
+      description: 'Enter your database host',     // Prompt displayed to the user. If not supplied name will be used.
+      type: 'string',                 // Specify the type of input to expect.
+    },
+    dbuser:  {
+      description: 'Enter your database username',     // Prompt displayed to the user. If not supplied name will be used.
+      type: 'string',                 // Specify the type of input to expect.
+    },
+    dbpassword:  {
+      description: 'Enter your database password',     // Prompt displayed to the user. If not supplied name will be used.
+      type: 'string',                 // Specify the type of input to expect.
+    },
+  }
+};
 
-process.exit = exit
+//
+// Start the prompt
+//
+prompt.start();
 
-// CLI
+//
+// Get the above properties from user
+//
+prompt.get(schema, function (err, result) {
 
-before(program, 'outputHelp', function() {
-  this.allowUnknownOption();
-});
+  process.exit = exit;
 
-program
-  .version(version)
-  .usage('[options] [dir]')
-  .option('-i, --ionic', 'add ionic folder')
-  .option('-p, --angularjs', 'Add Public Folder')
-  .parse(process.argv);
+  // CLI
 
-if (!exit.exited) {
-  main();
-}
+  before(program, 'outputHelp', function() {
+    this.allowUnknownOption();
+  });
 
-/**
- * Install a before function; AOP.
- */
+  program
+    .version(version)
+    .usage('[options] [dir]')
+    .option('-i, --ionic', 'add ionic folder')
+    .option('-p, --angularjs', 'Add Public Folder')
+    .parse(process.argv);
 
-function before(obj, method, fn) {
-  var old = obj[method];
-
-  obj[method] = function() {
-    fn.call(this);
-    old.apply(this, arguments);
-  };
-}
-
-
-
-/**
- * Graceful exit for async STDIO
- */
-
-function exit(code) {
-  // flush output for Node.js Windows pipe bug
-  // https://github.com/joyent/node/issues/6247 is just one bug example
-  // https://github.com/visionmedia/mocha/issues/333 has a good discussion
-  function done() {
-    if (!(draining--)) _exit(code);
+  if (!exit.exited) {
+    main();
   }
 
-  var draining = 0;
-  var streams = [process.stdout, process.stderr];
+  /**
+   * Install a before function; AOP.
+   */
 
-  exit.exited = true;
+  function before(obj, method, fn) {
+    var old = obj[method];
 
-  streams.forEach(function(stream) {
-    // submit empty write request and wait for completion
-    draining += 1;
-    stream.write('', done);
-  });
-
-  done();
-}
-
-
-
-/**
- * Determine if launched from cmd.exe
- */
-
-function launchedFromCmd() {
-  return process.platform === 'win32' && process.env._ === undefined;
-}
-
-/**
- * Load template file.
- */
-
-function loadTemplate(name) {
-  var dirPath = path.join(__dirname, '..', 'templates', name);
-  console.log(dirPath);
-  return fs.readFileSync(path.join(__dirname, '..', 'templates', name), 'utf-8');
-}
-
-
-function copyDir(dirName,pathName){
-  var dirPath = path.join(__dirname, '..', 'templates', dirName);
-
-  var pathName = path.join(pathName,dirName);
-   console.log(dirPath);
-   console.log(pathName);
-    fse.copy(dirPath, pathName, function (err) {
-  if (err) return console.error(err)
-  console.log('success!')
-})
+    obj[method] = function() {
+      fn.call(this);
+      old.apply(this, arguments);
+    };
+  }
 
 
 
+  /**
+   * Graceful exit for async STDIO
+   */
 
-}
-
-/**
- * Main program.
- */
-
-
-/**
- * echo str > path.
- *
- * @param {String} path
- * @param {String} str
- */
-
-function write(path, str, mode) {
-  fs.writeFileSync(path, str, {
-    mode: mode || 0666
-  });
-  console.log(path);
-}
-
-/**
- * Mkdir -p.
- *
- * @param {String} path
- * @param {Function} fn
- */
-
-function mkdir(path, fn) {
-  mkdirp(path, 0755, function(err) {
-    if (err) throw err;
-    console.log('   \033[36mcreate\033[0m : ' + path);
-    fn && fn();
-  });
-}
-
-
-
-
-/**
- * Check if the given directory `path` is empty.
- *
- * @param {String} path
- * @param {Function} fn
- */
-
-function emptyDirectory(path, fn) {
-  fs.readdir(path, function(err, files){
-    if (err && 'ENOENT' != err.code) throw err;
-    fn(!files || !files.length);
-  });
-}
-
-/**
- * Prompt for confirmation on STDOUT/STDIN
- */
-
-function confirm(msg, callback) {
-  var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  rl.question(msg, function (input) {
-    rl.close();
-    callback(/^y|yes|ok|true$/i.test(input));
-  });
-}
-
-function main() {
-  // Path
-  var destinationPath = program.args.shift() || '.';
-   console.log(destinationPath);
-  // App name
-  var appName = path.basename(path.resolve(destinationPath));
-
-
-  // Generate application
-  emptyDirectory(destinationPath, function (empty) {
-    if (empty) {
-      createHybridApplication(appName, destinationPath);
-    } else {
-      console.error("Aborting - App Name Not Defined");
-      exit(1);
+  function exit(code) {
+    // flush output for Node.js Windows pipe bug
+    // https://github.com/joyent/node/issues/6247 is just one bug example
+    // https://github.com/visionmedia/mocha/issues/333 has a good discussion
+    function done() {
+      if (!(draining--)) _exit(code);
     }
-  });
-}
+
+    var draining = 0;
+    var streams = [process.stdout, process.stderr];
+
+    exit.exited = true;
+
+    streams.forEach(function(stream) {
+      // submit empty write request and wait for completion
+      draining += 1;
+      stream.write('', done);
+    });
+
+    done();
+  }
 
 
 
-function createHybridApplication(app_name, pathName) {
-  var wait = 5;
+  /**
+   * Determine if launched from cmd.exe
+   */
 
-  // Create the App Directory
-    mkdir(pathName, function(){});
-    var app = loadTemplate('app.js');
-    var pkg = loadTemplate('package.json');
-    var www = loadTemplate('www');
-    www = www.replace('{name}', app_name);
-    var mpkg = pkg.replace('{name}', app_name);
-    //console.log(mpkg);
-    var dirPath = path.join(__dirname,'..',app_name);
-  //  write(dirPath + '/app.js', app);
-    //write(dirPath + '/package.json',mpkg);
+  function launchedFromCmd() {
+    return process.platform === 'win32' && process.env._ === undefined;
+  }
+
+  /**
+   * Load template file.
+   */
+
+  function loadTemplate(name) {
+    var dirPath = path.join(__dirname, '..', 'templates', name);
     console.log(dirPath);
+    return fs.readFileSync(path.join(__dirname, '..', 'templates', name), 'utf-8');
+  }
 
-    fs.writeFile(pathName+'/package.json', mpkg , function (err,data) {
-      if (err) {
-        return console.log("writeeee"+err);
-      }
-      console.log("write"+data);
+
+  function copyDir(dirName,pathName){
+    var dirPath = path.join(__dirname, '..', 'templates', dirName);
+
+    var pathName = path.join(pathName,dirName);
+     console.log(dirPath);
+     console.log(pathName);
+     fse.copy(dirPath, pathName, function (err) {
+       if (err) return console.error(err);
+       console.log('success!');
+     });
+
+  }
+
+  /**
+   * Main program.
+   */
+
+
+  /**
+   * echo str > path.
+   *
+   * @param {String} path
+   * @param {String} str
+   */
+
+  function write(path, str, mode) {
+    fs.writeFileSync(path, str, {
+      mode: mode || 0666
+    });
+    console.log(path);
+  }
+
+  /**
+   * Mkdir -p.
+   *
+   * @param {String} path
+   * @param {Function} fn
+   */
+
+  function mkdir(path, fn) {
+    mkdirp(path, 0755, function(err) {
+      if (err) throw err;
+      console.log('   \033[36mcreate\033[0m : ' + path);
+      fn && fn();
+    });
+  }
+
+
+
+
+  /**
+   * Check if the given directory `path` is empty.
+   *
+   * @param {String} path
+   * @param {Function} fn
+   */
+
+  function emptyDirectory(path, fn) {
+    fs.readdir(path, function(err, files){
+      if (err && 'ENOENT' != err.code) throw err;
+      fn(!files || !files.length);
+    });
+  }
+
+  /**
+   * Prompt for confirmation on STDOUT/STDIN
+   */
+
+  function confirm(msg, callback) {
+    var rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
     });
 
-    fs.writeFile(pathName+'/app.js', app , function (err,data) {
-      if (err) {
-        return console.log("writeeee"+err);
-      }
-      console.log("write"+data);
+    rl.question(msg, function (input) {
+      rl.close();
+      callback(/^y|yes|ok|true$/i.test(input));
     });
+  }
+
+  function main() {
+    // Path
+    var destinationPath = program.args.shift() || '.';
+     console.log(destinationPath);
+    // App name
+    var appName = path.basename(path.resolve(destinationPath));
 
 
-    copyDir('mobile',pathName);
-    copyDir('public',pathName);
-    write(pathName + '/www', www, 0755);
-    mkdir(pathName + '/api',function(){});
-    complete(app_name);
+    // Generate application
+    emptyDirectory(destinationPath, function (empty) {
+      if (empty) {
+        createHybridApplication(appName, destinationPath);
+      } else {
+        console.error("Aborting - App Name Not Defined");
+        exit(1);
+      }
+    });
+  }
 
-    function complete(app_name) {
+
+
+  function createHybridApplication(app_name, pathName) {
+    var wait = 5;
+
+    // Create the App Directory
+      mkdir(pathName, function(){});
+      var config = loadTemplate('config.js');
+      var app = loadTemplate('app.js');
+      var pkg = loadTemplate('package.json');
+      var www = loadTemplate('www');
+      www = www.replace('{name}', app_name);
+      var mpkg = pkg.replace('{name}', app_name);
+      //console.log(mpkg);
       var dirPath = path.join(__dirname,'..',app_name);
-      console.log(dirPath);
-            cp.exec('npm install', { cwd : pathName } ,function (error, stdout, stderr){
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
-            if (error !== null) {
-              console.log('exec error: ' + error);
-            }}
-          );
+    //  write(dirPath + '/app.js', app);
+      //write(dirPath + '/package.json',mpkg);
 
-    }
+      if(result.database.length !== 0 || result.host.length !== 0 || result.dbuser.length !== 0 || result.dbpassword.length !== 0 ){
+        config = config.replace('my_db', result.database.toString());
+        config = config.replace('localhost', result.host.toString());
+        config = config.replace('me', result.dbuser.toString());
+        config = config.replace('secret', result.dbpassword.toString());
+      }
 
-}
+      fs.writeFile(pathName+'/config.js', config , function (err,data) {
+        if (err) {
+          return console.log("writeeee"+err);
+        }
+        console.log("write"+data);
+      });
+
+      fs.writeFile(pathName+'/package.json', mpkg , function (err,data) {
+        if (err) {
+          return console.log("writeeee"+err);
+        }
+        console.log("write"+data);
+      });
+
+      fs.writeFile(pathName+'/app.js', app , function (err,data) {
+        if (err) {
+          return console.log("writeeee"+err);
+        }
+        console.log("write"+data);
+      });
+
+      copyDir('mobile',pathName);
+      copyDir('public',pathName);
+      write(pathName + '/www', www, 0755);
+      mkdir(pathName + '/api',function(){});
+      complete(app_name);
+
+      function complete(app_name) {
+        var dirPath = path.join(__dirname,'..',app_name);
+        console.log(dirPath);
+              cp.exec('npm install', { cwd : pathName } ,function (error, stdout, stderr){
+              console.log('stdout: ' + stdout);
+              console.log('stderr: ' + stderr);
+              if (error !== null) {
+                console.log('exec error: ' + error);
+              }}
+            );
+
+      }
+
+  }
+
+});
