@@ -5,7 +5,7 @@ var env = require('./environment');
 var connection = env.Dbconnection;
 var SendNotification = CRUD(connection,'todos');
 var deviceCrud  = CRUD(connection,'device_information');
-//var exports = module.exports = {};
+var exports = module.exports = {};
 
 exports.sendnotification = function(req,res){
               var gcm = require('node-gcm');
@@ -43,11 +43,11 @@ exports.sendnotification = function(req,res){
                   }    
               }
                 console.log(registrationIds);  
-              /*sender.send(message, device_token, function(err,result) {
+              sender.send(message, registrationIds, function(err,result) {
                 console.log("the result is");
                 console.log( result );
                 console.log( err );
-              });*/
+              });
                 res.jsonp(result);
             });
 
