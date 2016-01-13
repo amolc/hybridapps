@@ -26,13 +26,23 @@ exports.sendnotification = function(req,res){
             var totalrows={};
           
           var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id";
-          console.log("query1:",query1);
+            //console.log("query1:",query1);
           connection.query(query1, function( error , result ){
-              console.log(result);
-              console.log(result.device_token)
+              //console.log(result);
+              //console.log(result.device_token)
               for(i=0;i<result.length;i++){
-                 console.log('-------' + result[i].device_token + '------');
+                  console.log('-------' + result[i].device_token + '------');
+                  if( result[i].device_token ){
+                    if( result[i].platform == 'android' || result[i].platform == 'Android' ){
+                      var currenttoken_id = result[i].device_token;
+                      if( typeof currenttoken_id != undefined ){  
+                        console.log( 'currenttoken_id ='+currenttoken_id );    
+                        registrationIds.push( result[i].device_token );            
+                      }
+                    }
+                  }    
               }
+                console.log(registrationIds);  
               /*sender.send(message, device_token, function(err,result) {
                 console.log("the result is");
                 console.log( result );
