@@ -29,6 +29,10 @@ exports.sendnotification = function(req,res){
           console.log("query1:",query1);
           connection.query(query1, function( error , result ){
               console.log(result);
+              console.log(result.device_token)
+              for(i=0;i<result.length;i++){
+                 console.log('-------' + result[i].device_token + '------');
+              }
               /*sender.send(message, device_token, function(err,result) {
                 console.log("the result is");
                 console.log( result );
