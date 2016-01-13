@@ -5,7 +5,7 @@ var env = require('./environment');
 var connection = env.Dbconnection;
 var SendNotification = CRUD(connection,'todos');
 var deviceCrud  = CRUD(connection,'device_information');
-
+var exports = module.exports = {};
 
 exports.sendnotification = function(messagetitle, message){
               var gcm = require('node-gcm');
