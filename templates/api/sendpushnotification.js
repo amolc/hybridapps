@@ -34,7 +34,7 @@ exports.sendnotification = function(req,res){
                 console.log( result );
                 console.log( err );
               });*/
-                res.jsonp( responsedata );
+                res.jsonp(result);
             });
 
 
