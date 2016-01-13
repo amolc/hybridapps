@@ -5,9 +5,9 @@ var env = require('./environment');
 var connection = env.Dbconnection;
 var SendNotification = CRUD(connection,'todos');
 var deviceCrud  = CRUD(connection,'device_information');
-var exports = module.exports = {};
+//var exports = module.exports = {};
 
-exports.sendnotification = function(messagetitle, message){
+exports.sendnotification = function(req,res){
               var gcm = require('node-gcm');
             //var device_token = "APA91bEwcpQLaTEByT37g-zxj0PhhG9n_G--a_BxyD-bLJe9GN3hz2T3QEpOEbo2k9ez0GxTie7ZfS5pm2QoST8I_oAsyAAomwiiI2kB9oDRZUmOpZxrL-nfGblyynW4azpuI2cx1eNF";
             var sender = new gcm.Sender('AIzaSyAJ9kNU7h4VSK2oiqrD5EatNVvzBD6zsxw');
@@ -23,17 +23,17 @@ exports.sendnotification = function(messagetitle, message){
 
             var userid = req.body.user_id;
             var registrationIds = [];
-              var totalrows={};
+            var totalrows={};
           
           var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id";
           console.log("query1:",query1);
           connection.query(query1, function( error , result ){
               console.log(result);
-              sender.send(message, device_token, function(err,result) {
+              /*sender.send(message, device_token, function(err,result) {
                 console.log("the result is");
                 console.log( result );
                 console.log( err );
-              });
+              });*/
                 res.jsonp( responsedata );
             });
 
