@@ -74,6 +74,6 @@ app.post('/api/gettododetails',todos.gettododetails);
 app.post('/api/updatetodos',todos.updatetodos);
 app.post('/api/deletetodo',todos.deletetodo);
 app.post('/api/deviceregister',device_register.deviceregister);
-app.get('/api/sendnotification',sendpushnotification.sendnotification);
+//app.get('/api/sendnotification',sendpushnotification.sendnotification);
 
 module.exports = app;

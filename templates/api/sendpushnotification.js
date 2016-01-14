@@ -1,59 +1,36 @@
-var express = require('express');
+/*var express = require('express');
 var mysql = require('mysql');
 var CRUD = require('mysql-crud');
 var env = require('./environment');
 var connection = env.Dbconnection;
 var SendNotification = CRUD(connection,'todos');
 var deviceCrud  = CRUD(connection,'device_information');
-var exports = module.exports = {};
 var async = require("async");
 
-// var CronJob = require('cron').CronJob;                    
-// new CronJob('* * * * * *', function() {
 
 exports.sendnotification = function(req,res){
             var gcm = require('node-gcm');
             var sender = new gcm.Sender('AIzaSyAJ9kNU7h4VSK2oiqrD5EatNVvzBD6zsxw');
-            var message = new gcm.Message(); //create a new message
+            var message = new gcm.Message(); 
 
             message.addData('title', 'New Message');
             message.addData('sound', 'notification');
 
-            message.collapseKey = 'testing'; //grouping messages
-            message.delayWhileIdle = true; //delay sending while receiving device is offline
-            message.timeToLive = 3000; //the number of seconds to keep the message on the server if the device is offline
+            message.collapseKey = 'testing'; 
+            message.delayWhileIdle = true; 
+            message.timeToLive = 3000; 
 
             var userid = req.body.user_id;
             var registrationIds = [];
             var remidermessages = [];
-            //var d = new Date();
-          
+            var remindertimes = [];
           var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id";
-            //console.log("query1:",query1);
           connection.query(query1, function( error , result ){
-              //console.log("line no 33:",d.yyyymmdd());
-              // for(i=0;i<result.length;i++){
-              //     // if(result[i].reminder_date = d.yyyymmdd()){
-              //     //   console.log("Date Match")
-              //     // }
-              //     console.log('*****' + result[i].device_token + '*****');
-              //     console.log('*****' + result[i].todo_data + '*****');
-              //     remidermessages = result[i].todo_data;
-              //     registrationIds = result[i].device_token;
-              //     message.addData('message', remidermessages);
-
-              //     sender.send(message, registrationIds, function(err,result1) {
-              //         console.log("the result is");
-              //         console.log(result1);
-              //         console.log( err );
-              //     });
-                  
-              // }
               for (var i = 0; i < result.length; i++) {
-                if (result[i].reminder_date.yyyymmdd() == currentdate.yyyymmdd()) {
-                    //console.log("Todays Match Found");
+                if (result[i].reminder_date.yyyymmdd() == currentdate.yyyymmdd() && result[i].reminder_time == finaltime) {
                     remidermessages = result[i].todo_data;
                     registrationIds = result[i].device_token;
+                    remindertimes = result[i].reminder_time;
                     message.addData('message', remidermessages);
 
                     sender.send(message, registrationIds, function(err,result1) {
@@ -61,16 +38,21 @@ exports.sendnotification = function(req,res){
                         console.log(result1);
                         console.log( err );
                     });
+                    console.log("remidermessages:",remidermessages);
+                    console.log("registrationIds:",registrationIds);
+                    console.log("remindertimes:",remindertimes);
+                    
                   };
-
+                    
               };
+                    console.log("*******************************");
                 res.jsonp(result);
           });
-};
+};*/
 
-/***** javascript function for getting date*******/
+/**** javascript function for getting date******/
 
- Date.prototype.yyyymmdd = function() {
+/* Date.prototype.yyyymmdd = function() {
    var yyyy = this.getFullYear().toString();
    var mm = (this.getMonth()+1).toString(); 
    var dd  = this.getDate().toString();
@@ -78,9 +60,101 @@ exports.sendnotification = function(req,res){
   };
 
 currentdate = new Date();
-currentdate.yyyymmdd();
-//console.log(currentdate.yyyymmdd());
+currentdate.yyyymmdd();*/
 
-/********************* End ******************************/ 
+/********************* END *************************** 
 
- //}, null, true, 'America/Los_Angeles');
+/******** javascript function for getting Current System time with am/pm *********************/      
+  
+ /* var currentdt = new Date();
+  var hrs = currentdt.getHours();
+  var min = currentdt.getMinutes();
+  var AMPM = hrs >= 12 ? 'PM' : 'AM';
+  hrs = hrs % 12;
+  hrs = hrs ? hrs : 12; // the hour '0' should be '12'
+  minutes = min < 10 ? '0'+min : min;
+  var finaltime = hrs + ':' + min + ' ' + AMPM;
+  console.log("Currenttime:",finaltime);*/
+
+/********   End of code for current time *********************************************/
+
+
+/********************* Cron Code **********************/
+
+
+var mysql = require('mysql');
+var env = require('./environment');
+var connection = env.Dbconnection;
+
+
+var CronJob = require('cron').CronJob;
+var job = new CronJob({
+  cronTime: '20 * * * * *',
+  onTick: function() {
+            var gcm = require('node-gcm');
+            var sender = new gcm.Sender('AIzaSyAJ9kNU7h4VSK2oiqrD5EatNVvzBD6zsxw');
+            var message = new gcm.Message(); 
+
+            // getting current date
+            Date.prototype.yyyymmdd = function() {
+                var yyyy = this.getFullYear().toString();
+                var mm = (this.getMonth()+1).toString(); 
+                var dd  = this.getDate().toString();
+                return yyyy +"-"+ (mm[1]?mm:"0"+mm[0])+"-"+(dd[1]?dd:"0"+dd[0]);
+            };
+              currentdate = new Date();
+              var finaldate = currentdate.yyyymmdd();
+              //console.log(finaldate);
+
+            //function for getting Current System time with am/pm
+                  
+            var currentdt = new Date();
+            var hrs = currentdt.getHours();
+            var min = currentdt.getMinutes();
+            var AMPM = hrs >= 12 ? 'PM' : 'AM';
+            hrs = hrs % 12;
+            hrs = hrs ? hrs : 12; // the hour '0' should be '12'
+            minutes = min < 10 ? '0'+min : min;
+            var finaltime = hrs + ':' + min + ' ' + AMPM;
+            console.log("Currenttime:",finaltime);
+
+            message.addData('title', 'New Message');
+            message.addData('sound', 'notification');
+
+            message.collapseKey = 'testing'; 
+            message.delayWhileIdle = true; 
+            message.timeToLive = 3000; 
+
+            var registrationIds = [];
+            var remidermessages = [];
+            var remindertimes = [];
+
+          var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id";
+          connection.query(query1, function( error , result ){
+              for (var i = 0; i < result.length; i++) {
+                if (result[i].reminder_date.yyyymmdd() == finaldate && result[i].reminder_time == finaltime) {
+                    console.log("if condition:","if condition");
+                    remidermessages = result[i].todo_data;
+                    registrationIds = result[i].device_token;
+                    remindertimes = result[i].reminder_time;
+                    message.addData('message', remidermessages);
+
+                    sender.send(message, registrationIds, function(err,result1) {
+                        console.log("the result is");
+                        console.log(result1);
+                        console.log( err );
+                    });
+
+                    console.log("remidermessages:",remidermessages);
+                    console.log("registrationIds:",registrationIds);
+                    console.log("remindertimes:",remindertimes);
+                  }
+
+              };
+
+          });
+    
+  },
+   start: false
+});
+job.start();

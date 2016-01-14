@@ -58,13 +58,23 @@ angular.module('DemoApp').controller('usercontroller', [
      @lastDate
      */
     $scope.addtodos = function(data) {
-      var tododata = {
-        todo_data : data.todo_data,
-        user_id: $scope.userSession.userid,
-        reminder_date:data.reminderdate,
-        reminder_time:data.remindertime
-      }
-      console.log("tododata:",tododata);
+
+        var selectedTime = data.remindertime;
+        var hrs = selectedTime.getHours();
+        var min = selectedTime.getMinutes();
+        var AMPM = hrs >= 12 ? 'PM' : 'AM';
+        hrs = hrs % 12;
+        hrs = hrs ? hrs : 12; // the hour '0' should be '12'
+        minutes = min < 10 ? '0'+min : min;
+        var finaltime = hrs + ':' + min + ' ' + AMPM;
+
+        var tododata = {
+            todo_data : data.todo_data,
+            user_id: $scope.userSession.userid,
+            reminder_date:data.reminderdate,
+            reminder_time:finaltime
+        }
+      
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
         console.log("res:",res);
         if(res.status == true){
@@ -87,6 +97,7 @@ angular.module('DemoApp').controller('usercontroller', [
       });
     }
 
+
      /**
      @function updatetodos
      @type post
@@ -95,12 +106,23 @@ angular.module('DemoApp').controller('usercontroller', [
      @lastDate
      */
     $scope.updatetodos = function(data) {
-      var tododata = {
-        todo_data : data.todo_data,
-        todo_id: $stateParams.todo_id,
-        reminder_date:data.reminderdate,
-        reminder_time:data.remindertime
-      }
+
+        var selectedTime = data.remindertime;
+        var hrs = selectedTime.getHours();
+        var min = selectedTime.getMinutes();
+        var AMPM = hrs >= 12 ? 'PM' : 'AM';
+        hrs = hrs % 12;
+        hrs = hrs ? hrs : 12; // the hour '0' should be '12'
+        minutes = min < 10 ? '0'+min : min;
+        var finaltime = hrs + ':' + min + ' ' + AMPM;
+
+        var tododata = {
+          todo_data : data.todo_data,
+          todo_id: $stateParams.todo_id,
+          reminder_date:data.reminderdate,
+          reminder_time:finaltime
+        }
+
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
        if(res.status == true){
           $scope.updateRemindermsg = 'Reminder Updated Successfully';
@@ -111,7 +133,7 @@ angular.module('DemoApp').controller('usercontroller', [
                 $timeout(function() {
                   $scope.showupdateRemindermsg = false;
                 }, 3000);
-                  $scope.gettodos();
+                  $scope.gettodos($stateParams.todo_id);
                   document.getElementById("addreminderForm").reset();
                   $location.path('/welcomepage/');
               }, 2000);
