@@ -91,7 +91,7 @@ angular.module('starter.controllers')
      
     $scope.signup = function(info,valid){
       if(valid){
-         $http.post(baseUrl + 'login', $scope.data).success(function(res,req){
+         $http.post(baseUrl + 'signup', info).success(function(res,req){
             console.log("res:",res);
          }).error(function(){
             console.log("problem In signup");

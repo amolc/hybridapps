@@ -32,22 +32,24 @@ exports.login = function(req,res){
 
 exports.signup = function(req,res){
       console.log(req.body);
-      var email = req.body.user_email;
       userCRUD.load({
-        user_email : email,
+        user_email : req.body.user_email,
       }, function (err, val) {
         if(val.length>0){
-          resdata.record=val;
-          resdata.status=false;
-          resdata.message='user already exists';
+          console.log("val:",val);
+            var resdata={
+                record:'',
+                status:false,
+                message :'user already exists..'
+            };
           res.jsonp(resdata);
         }else{
 
         userCRUD.create({
-            'user_fname':req.body.user_fname;
-            'user_lname':req.body.user_lname;
-            'user_email':email;
-            'user_password':req.body.user_password;
+            'user_fname': req.body.user_fname,
+            'user_lname': req.body.user_lname,
+            'user_email': req.body.user_email,
+            'user_password': req.body.user_password,
             'created_on':env.timestamp(),
             'modified_on':env.timestamp()
           },function(error, result) {
@@ -64,6 +66,7 @@ exports.signup = function(req,res){
               record: result,
               message: 'user failed to create'
             }
+            console.log("error:",error);
             res.jsonp(responsedata);
           }
         });

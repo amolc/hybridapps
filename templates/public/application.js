@@ -17,10 +17,14 @@ SampleApplicationModule.config(['$urlRouterProvider', '$stateProvider','storePro
       templateUrl: 'templates/signin.html'
     })
 
-    $stateProvider
     .state('welcomepage', {
       url: '/welcomepage/:todo_id',
       templateUrl: 'templates/welcomepage.html'
+    })
+
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'templates/signup.html'
     })
 
     /*$stateProvider
@@ -104,6 +108,35 @@ angular.module('DemoApp').controller('MainController', [
       store.remove('userSession');
       $location.path('signin');
       $scope.init();
+    };
+
+    $scope.signup = function(userinfo,valid){
+      console.log("userinfo:",userinfo);
+      if(valid){
+         $http.post(baseUrl + 'signup', userinfo).success(function(res,req){
+            console.log("res:",res);
+            if(res.status == true){
+                  $scope.signupmsg = 'User Created Successfully';
+                  $scope.showsignmsg = true;
+                  
+                  $timeout(function() {
+                    $timeout(function() {
+                      $scope.showsignmsg = false;
+                    }, 3000);
+                    document.getElementById("signupform").reset();
+                    $location.path('signin');
+                    }, 2000);
+              
+            }
+            else{
+              console.log("error");
+            }
+            
+         }).error(function(){
+            console.log("problem In signup");
+         });  
+      }
+      
     };
     
   }
