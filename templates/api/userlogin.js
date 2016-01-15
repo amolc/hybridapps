@@ -42,7 +42,7 @@ exports.signup = function(req,res){
           res.jsonp(resdata);
         }else{
 
-        todosCRUD.create({
+        userCRUD.create({
             'user_fname':req.body.user_fname;
             'user_lname':req.body.user_lname;
             'user_email':email;
