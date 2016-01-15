@@ -116,7 +116,7 @@ var job = new CronJob({
             hrs = hrs ? hrs : 12; // the hour '0' should be '12'
             minutes = min < 10 ? '0'+min : min;
             var finaltime = hrs + ':' + min + ' ' + AMPM;
-            console.log("Currenttime:",finaltime);
+            //console.log("Currenttime:",finaltime);
 
             message.addData('title', 'New Message');
             message.addData('sound', 'notification');
