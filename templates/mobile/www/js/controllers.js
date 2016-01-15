@@ -47,8 +47,6 @@ angular.module('starter.controllers', [])
    @lastDate
   */
   
-  
-
     $scope.addReminder = function(reminder) {
 
       var dateobj = $scope.datepickerObject.inputDate;
@@ -61,8 +59,6 @@ angular.module('starter.controllers', [])
         reminder_time: $scope.time12hr
         //reminder_date:  $scope.datepickerObject.inputDate,
       }
-
-      console.log(fulldate);
 
       $http.post(baseUrl + 'addtodos',todoinfo).success(function(res, req) {
       if(res.status == true){
