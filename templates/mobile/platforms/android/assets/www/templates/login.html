@@ -1,4 +1,4 @@
-<ion-view view-title="Login" name="login-view">
+<ion-view view-title="LOGIN" name="login-view">
   <ion-content class="padding">
     <form  name="loginform" ng-submit="userlogin(data,loginform.$valid)" id="loginfrm" novalidate>
       <div class="list list-inset">
@@ -26,6 +26,10 @@
           <button class="button button-block button-calm" type="submit">Login</button>
           <div ng-model="loginerrormsg" ng-show="showloginerrormsg" class="assertive error_msg">{{loginerrormsg}}</div>
     </form>
-      
+    <div class="row">
+      <div class="col col-60 col-offset-20">
+        <label ui-sref="signup">Click Here For Sign Up</label>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

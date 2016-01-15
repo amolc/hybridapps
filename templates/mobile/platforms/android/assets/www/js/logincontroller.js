@@ -68,8 +68,6 @@ angular.module('starter.controllers')
           //console.log("platform:",store.get('platform'));
           //console.log("deviceid:",store.get('deviceid'));
           //console.log("device_token:",store.get('device_token'));
-
-
           
       }
     };
@@ -89,5 +87,52 @@ angular.module('starter.controllers')
       $location.path('/login');
       document.getElementById("loginfrm").reset();
     };
+
+     
+    $scope.signup = function(info,valid){
+      if(valid){
+         $http.post(baseUrl + 'signup', info).success(function(res,req){
+            console.log("res:",res);
+            if(res.status == true)
+              {
+                  $scope.signupmsg = 'User Created Successfully';
+                  $scope.showsignmsg = true;
+                  
+                  $timeout(function() {
+                    $timeout(function() {
+                      $scope.showsignmsg = false;
+                    }, 3000);
+                    document.getElementById("signupfrm").reset();
+                    $location.path('signin');
+                    }, 2000);
+              }else{
+                if(res.record == ""){
+
+                  $scope.userexistmsg = 'User Already Exists..';
+                  $scope.showuserexistmsg = true;
+                  
+                  $timeout(function() {
+                    $timeout(function() {
+                      $scope.showuserexistmsg = false;
+                    }, 3000);
+                    }, 2000);
+                }else{
+
+                  $scope.userrormsg = 'User Not Crated';
+                  $scope.showuserrormsg = true;
+                  
+                  $timeout(function() {
+                    $timeout(function() {
+                      $scope.showuserrormsg = false;
+                    }, 3000);
+                    }, 2000);
+                }
+              }
+         }).error(function(){
+            console.log("problem In signup");
+         });  
+      }
+      
+    }
 
 })

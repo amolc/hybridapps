@@ -1,0 +1,55 @@
+<ion-view view-title="SIGN UP" name="login-view">
+  <ion-content class="padding">
+    <form  name="signupform" ng-submit="signup(info,signupform.$valid)" id="signupfrm" novalidate>
+      <div class="list list-inset">
+
+          <label class="item item-input">
+            <input type="text" placeholder="First Name" name="fname" ng-model="info.user_fname" required>
+          </label>
+
+          <span >
+            <div data-ng-messages="signupform.$submitted && signupform.fname.$error" role="alert" class="assertive error_msg">
+                  <div data-ng-message="required">Please Enter First Name</div>
+            </div>
+          </span>
+
+          <label class="item item-input">
+            <input type="text" placeholder="Last Name" name="lname" ng-model="info.user_lname" required>
+          </label>
+
+          <span >
+            <div data-ng-messages="signupform.$submitted && signupform.lname.$error" role="alert" class="assertive error_msg">
+                  <div data-ng-message="required">Please Enter Last Name</div>
+            </div>
+          </span>
+
+          <label class="item item-input">
+            <input type="text" placeholder="Email Id" name="email" ng-model="info.user_email" required>
+          </label>
+
+          <span>
+            <div data-ng-messages="signupform.$submitted && signupform.email.$error" role="alert" class="assertive error_msg">
+                  <div data-ng-message="required">Please Enter Email Id</div>
+                  <div data-ng-message="email">Enter Valid Email Id</div>
+            </div>
+          </span>
+
+          <label class="item item-input">
+              <input type="password" placeholder="Password" name="password" ng-model="info.user_password" required>
+          </label>
+
+          <span >
+            <div data-ng-messages="signupform.$submitted && signupform.password.$error" role="alert" class="assertive error_msg">
+                  <div data-ng-message="required">Please Enter Password</div>
+            </div>
+          </span>
+
+      </div>
+          <button class="button button-block button-calm" type="submit">SIGN UP</button>
+          <div ng-model="signupmsg" ng-show="showsignmsg" class="balanced">{{signupmsg}}</div>
+          <div ng-model="userexistmsg" ng-show="showuserexistmsg" class="assertive error_msg">{{userexistmsg}}</div>
+          <div ng-model="userrormsg" ng-show="showuserrormsg" class="assertive error_msg">{{userrormsg}}</div>
+    </form>
+      
+  </ion-content>
+</ion-view>
