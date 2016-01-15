@@ -47,16 +47,22 @@ angular.module('starter.controllers', [])
    @lastDate
   */
   
+  
 
     $scope.addReminder = function(reminder) {
+
+      var dateobj = $scope.datepickerObject.inputDate;
+      var fulldate = $scope.datepickerObject.inputDate.getFullYear()+ "-" +($scope.datepickerObject.inputDate.getMonth()+1) + "-" +$scope.datepickerObject.inputDate.getDate();
+
       var todoinfo = {
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid,
-        reminder_date:  $scope.datepickerObject.inputDate,
+        reminder_date: fulldate,
         reminder_time: $scope.time12hr
+        //reminder_date:  $scope.datepickerObject.inputDate,
       }
 
-      //console.log($scope.datepickerObject.inputDate);
+      console.log(fulldate);
 
       $http.post(baseUrl + 'addtodos',todoinfo).success(function(res, req) {
       if(res.status == true){
