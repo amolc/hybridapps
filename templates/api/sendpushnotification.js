@@ -133,21 +133,21 @@ var job = new CronJob({
           connection.query(query1, function( error , result ){
               for (var i = 0; i < result.length; i++) {
                 if (result[i].reminder_date.yyyymmdd() == finaldate && result[i].reminder_time == finaltime) {
-                    console.log("if condition:","if condition");
+                    //console.log("if condition:","if condition");
                     remidermessages = result[i].todo_data;
                     registrationIds = result[i].device_token;
                     remindertimes = result[i].reminder_time;
                     message.addData('message', remidermessages);
 
                     sender.send(message, registrationIds, function(err,result1) {
-                        console.log("the result is");
-                        console.log(result1);
-                        console.log( err );
+                        //console.log("the result is");
+                        //console.log(result1);
+                        //console.log( err );
                     });
 
-                    console.log("remidermessages:",remidermessages);
-                    console.log("registrationIds:",registrationIds);
-                    console.log("remindertimes:",remindertimes);
+                    //console.log("remidermessages:",remidermessages);
+                    //console.log("registrationIds:",registrationIds);
+                    //console.log("remindertimes:",remindertimes);
                   }
 
               };

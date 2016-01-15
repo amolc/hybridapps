@@ -4,6 +4,7 @@ angular.module('starter.controllers')
 
 	 $scope.init = function() {
       $scope.usersession = store.get('userDetail') || {} ;
+      //console.log($scope.usersession.userid);
    }
 
    /*
@@ -43,9 +44,33 @@ angular.module('starter.controllers')
 
               }, 2000);
             }
+
+            if(store.get('platform')){
+              var deviceinfo = {
+                platform: store.get('platform'),
+                deviceid: store.get('deviceid'),
+                device_token: store.get('device_token'),
+                userid: $scope.usersession.userid
+              }
+
+              $http.post(baseUrl + 'deviceregister', deviceinfo).success(function(res,req){
+                console.log("res:",res);
+              }).error(function(){
+                  console.log("Error to get device info");
+              });
+
+            }
+          
         }).error(function(){
           console.log("Connection Problem..");
         });
+
+          //console.log("platform:",store.get('platform'));
+          //console.log("deviceid:",store.get('deviceid'));
+          //console.log("device_token:",store.get('device_token'));
+
+
+          
       }
     };
 
@@ -58,8 +83,9 @@ angular.module('starter.controllers')
    
     $scope.usersignout = function() {
       store.remove('userDetail');
-      //$window.location.reload(true);
-       
+      store.remove('platform');
+      store.remove('deviceid');
+      store.remove('device_token');
       $location.path('/login');
       document.getElementById("loginfrm").reset();
     };

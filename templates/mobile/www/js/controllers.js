@@ -5,6 +5,7 @@ angular.module('starter.controllers', [])
   $scope.init = function() {
     $scope.usersession = store.get('userDetail') || {};
      $scope.getreminders();
+     
 
      if($stateParams){
       $scope.stateParams = $stateParams.todo_id;
@@ -45,17 +46,19 @@ angular.module('starter.controllers', [])
    @initialDate
    @lastDate
   */
-    
+  
+
     $scope.addReminder = function(reminder) {
-      $scope.reminder = {
+      var todoinfo = {
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid,
         reminder_date:  $scope.datepickerObject.inputDate,
         reminder_time: $scope.time12hr
-        //reminder_time: reminder.remindertime
       }
-      console.log($scope.reminder);
-      $http.post(baseUrl + 'addtodos',$scope.reminder).success(function(res, req) {
+
+      //console.log($scope.datepickerObject.inputDate);
+
+      $http.post(baseUrl + 'addtodos',todoinfo).success(function(res, req) {
       if(res.status == true){
          
           $scope.reminderaddmsg = 'Reminder Added Successfully';
@@ -70,10 +73,8 @@ angular.module('starter.controllers', [])
              $state.go('tab.addreminder');
              $scope.IsVisible = false;
           }, 2000);
-        $scope.getreminders();
-      
-
-        //$location.path('/tab/addreminder/');
+          $scope.getreminders();
+          //$location.path('/tab/addreminder/');
       }else{
          console.log("Reminder Failes to Add");
       }
@@ -97,8 +98,9 @@ angular.module('starter.controllers', [])
         todo_data : reminder.todo_data,
         todo_id: $stateParams.todo_id,
         reminder_date:  $scope.datepickerObject.inputDate,
-        reminder_time: $scope.timePickerObject.inputEpochTime
+        reminder_time: $scope.time12hr
       }
+      //console.log(tododata);
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
           $scope.getreminders();
@@ -141,8 +143,8 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
         $scope.reminderlist = res.record;
-        console.log("reminderlist:",$scope.reminderlist);
-        //console.log("$scope.reminderlist:",$scope.reminderlist);
+        //console.log("reminderlist:",$scope.reminderlist);
+        //$scope.sendnotification($scope.reminderlist);
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -280,6 +282,23 @@ angular.module('starter.controllers', [])
         //console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
       }
     }
+
+
+    /*$scope.sendnotification = function(reminderlist){
+
+       var userinfo = {
+          user_id : $scope.usersession.userid
+       } 
+        
+        $http.get(baseUrl + 'sendnotification').success(function(res, req) {
+          console.log("res in sendnotification:",res);
+        }); 
+    };*/
+
+    
+
+
+
 
 
 

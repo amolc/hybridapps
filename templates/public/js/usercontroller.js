@@ -20,7 +20,6 @@ angular.module('DemoApp').controller('usercontroller', [
       }
 
     }
-    
       $scope.stateParams = $stateParams.todo_id;
       $scope.IsVisible = false;
       $scope.IsCalVisible = false;
@@ -74,7 +73,8 @@ angular.module('DemoApp').controller('usercontroller', [
             reminder_date:data.reminderdate,
             reminder_time:finaltime
         }
-      
+        
+        console.log("tododata:",tododata);
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
         console.log("res:",res);
         if(res.status == true){
