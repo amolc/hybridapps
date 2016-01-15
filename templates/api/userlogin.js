@@ -31,6 +31,7 @@ exports.login = function(req,res){
 }
 
 exports.signup = function(req,res){
+      console.log(req.body);
       var email = req.body.user_email;
       userCRUD.load({
         user_email : email,
