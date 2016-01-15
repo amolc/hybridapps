@@ -115,9 +115,15 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
 
   $stateProvider
 
-    .state('login', {
+  .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
+      controller:'logincontroller'
+  })
+
+  .state('signup', {
+      url: '/signup',
+      templateUrl: 'templates/signup.html',
       controller:'logincontroller'
   })  
 

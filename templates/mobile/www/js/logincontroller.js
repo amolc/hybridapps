@@ -68,8 +68,6 @@ angular.module('starter.controllers')
           //console.log("platform:",store.get('platform'));
           //console.log("deviceid:",store.get('deviceid'));
           //console.log("device_token:",store.get('device_token'));
-
-
           
       }
     };
@@ -89,5 +87,17 @@ angular.module('starter.controllers')
       $location.path('/login');
       document.getElementById("loginfrm").reset();
     };
+
+     
+    $scope.signup = function(info,valid){
+      if(valid){
+         $http.post(baseUrl + 'login', $scope.data).success(function(res,req){
+            console.log("res:",res);
+         }).error(function(){
+            console.log("problem In signup");
+         });  
+      }
+      
+    }
 
 })
