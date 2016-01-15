@@ -4,7 +4,7 @@ angular.module('starter.controllers')
 
 	 $scope.init = function() {
       $scope.usersession = store.get('userDetail') || {} ;
-      console.log($scope.usersession.userid);
+      //console.log($scope.usersession.userid);
    }
 
    /*

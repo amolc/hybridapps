@@ -59,7 +59,7 @@ angular.module('starter.controllers', [])
         reminder_time: $scope.time12hr
         //reminder_date:  $scope.datepickerObject.inputDate,
       }
-
+      
       $http.post(baseUrl + 'addtodos',todoinfo).success(function(res, req) {
       if(res.status == true){
          

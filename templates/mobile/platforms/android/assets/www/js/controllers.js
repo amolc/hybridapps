@@ -48,15 +48,19 @@ angular.module('starter.controllers', [])
   */
   
     $scope.addReminder = function(reminder) {
-      var reminderdata = {
+
+      var dateobj = $scope.datepickerObject.inputDate;
+      var fulldate = $scope.datepickerObject.inputDate.getFullYear()+ "-" +($scope.datepickerObject.inputDate.getMonth()+1) + "-" +$scope.datepickerObject.inputDate.getDate();
+
+      var todoinfo = {
         todo_data : reminder.todo_data,
         user_id: $scope.usersession.userid,
-        reminder_date:  $scope.datepickerObject.inputDate,
+        reminder_date: fulldate,
         reminder_time: $scope.time12hr
+        //reminder_date:  $scope.datepickerObject.inputDate,
       }
-      console.log(reminderdata);
-
-      $http.post(baseUrl + 'addtodos',reminderdata).success(function(res, req) {
+      
+      $http.post(baseUrl + 'addtodos',todoinfo).success(function(res, req) {
       if(res.status == true){
          
           $scope.reminderaddmsg = 'Reminder Added Successfully';
@@ -98,7 +102,7 @@ angular.module('starter.controllers', [])
         reminder_date:  $scope.datepickerObject.inputDate,
         reminder_time: $scope.time12hr
       }
-      console.log(tododata);
+      //console.log(tododata);
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
           $scope.getreminders();
@@ -141,9 +145,8 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
         $scope.reminderlist = res.record;
-        console.log("reminderlist:",$scope.reminderlist);
-        $scope.sendnotification($scope.reminderlist);
-        //console.log("$scope.reminderlist:",$scope.reminderlist);
+        //console.log("reminderlist:",$scope.reminderlist);
+        //$scope.sendnotification($scope.reminderlist);
       }).error(function() {
         console.log("Connection Problem.");
       });
@@ -223,7 +226,7 @@ angular.module('starter.controllers', [])
         modalFooterColor: 'bar-positive', //Optional
         callback: function (val) {  //Mandatory
           datePickerCallback(val);
-          console.log("val:",val);
+          //console.log("val:",val);
         }
       };
 
@@ -283,7 +286,7 @@ angular.module('starter.controllers', [])
     }
 
 
-    $scope.sendnotification = function(reminderlist){
+    /*$scope.sendnotification = function(reminderlist){
 
        var userinfo = {
           user_id : $scope.usersession.userid
@@ -292,7 +295,7 @@ angular.module('starter.controllers', [])
         $http.get(baseUrl + 'sendnotification').success(function(res, req) {
           console.log("res in sendnotification:",res);
         }); 
-    };
+    };*/
 
     
 
