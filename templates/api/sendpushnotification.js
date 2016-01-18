@@ -84,10 +84,14 @@ currentdate.yyyymmdd();*/
 
 var mysql = require('mysql');
 var env = require('./environment');
+var moment = require('moment');
+moment().format();
 var connection = env.Dbconnection;
 
-
 var CronJob = require('cron').CronJob;
+
+console.log("utc hrs:",moment.utc().format("h:mm"));
+
 var job = new CronJob({
   cronTime: '20 * * * * *',
   onTick: function() {
@@ -104,18 +108,20 @@ var job = new CronJob({
             };
               currentdate = new Date();
               var finaldate = currentdate.yyyymmdd();
+              var currentUTCtime = moment.utc().format("h:mm");
+              console.log("utc hrs 112: ",currentUTCtime);
               //console.log(finaldate);
 
             //function for getting Current System time with am/pm
                   
-            var currentdt = new Date();
+            /*var currentdt = new Date();
             var hrs = currentdt.getHours();
             var min = currentdt.getMinutes();
             var AMPM = hrs >= 12 ? 'PM' : 'AM';
             hrs = hrs % 12;
             hrs = hrs ? hrs : 12; // the hour '0' should be '12'
             minutes = min < 10 ? '0'+min : min;
-            var finaltime = hrs + ':' + min + ' ' + AMPM;
+            var finaltime = hrs + ':' + min + ' ' + AMPM;*/
             //console.log("Currenttime:",finaltime);
 
             message.addData('title', 'New Message');
@@ -132,17 +138,18 @@ var job = new CronJob({
           var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id";
           connection.query(query1, function( error , result ){
               for (var i = 0; i < result.length; i++) {
-                if (result[i].reminder_date.yyyymmdd() == finaldate && result[i].reminder_time == finaltime) {
-                    //console.log("if condition:","if condition");
+                if (result[i].reminder_date.yyyymmdd() == finaldate && result[i].reminder_time == currentUTCtime) {
+                    console.log("Time match");
                     remidermessages = result[i].todo_data;
                     registrationIds = result[i].device_token;
                     remindertimes = result[i].reminder_time;
                     message.addData('message', remidermessages);
+                    
 
                     sender.send(message, registrationIds, function(err,result1) {
-                        //console.log("the result is");
-                        //console.log(result1);
-                        //console.log( err );
+                        console.log("the result is");
+                        console.log(result1);
+                        console.log( err );
                     });
 
                     //console.log("remidermessages:",remidermessages);

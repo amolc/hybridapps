@@ -44,11 +44,13 @@ angular.module('starter.controllers', [])
       
       var dateobj = $scope.datepickerObject.inputDate;
       var fulldate = dateobj.getFullYear()+ "-" +(dateobj.getMonth()+1) + "-" +dateobj.getDate();
+       
+
       var todoinfo = {
         todo_data : $scope.reminder.todo_data,
         user_id: $scope.usersession.userid,
         reminder_date: fulldate,
-        reminder_time: $scope.time12hr
+        reminder_time: $scope.timeInUTC
         //reminder_date:  $scope.datepickerObject.inputDate,
       }
       
@@ -77,6 +79,9 @@ angular.module('starter.controllers', [])
 
     }
 
+    //console.log(moment.utc());
+    //console.log("utc hrs:",moment.utc().format("h:mm"));
+ 
   /**
    @function updateReminder
    @type post
@@ -84,9 +89,9 @@ angular.module('starter.controllers', [])
    @initialDate
    @lastDate
   */
-  
+    
+    $scope.timeInUTC="";
     $scope.updateReminder = function() {
-      
       var dateobj = $scope.datepickerObject.inputDate;
       var fulldate = dateobj.getFullYear()+ "-" +(dateobj.getMonth()+1) + "-" +dateobj.getDate();
 
@@ -94,7 +99,7 @@ angular.module('starter.controllers', [])
         todo_data : $scope.reminderinfo.todo_data,
         todo_id: $scope.reminderinfo.todo_id,
         reminder_date: fulldate,
-        reminder_time: $scope.time12hr
+        reminder_time: $scope.timeInUTC
       }
       
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
@@ -150,13 +155,15 @@ angular.module('starter.controllers', [])
       }
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
         $scope.reminderlist = res.record;
+          //console.log("list length:",$scope.reminderlist.length); 
+        
         //$scope.sendnotification($scope.reminderlist);
+        //var localTime = moment(object).utc().format('HH:mm');
+        //console.log(localTime);
       }).error(function() {
         console.log("Connection Problem.");
       });
     }
-
-
 
   /**
     @function deleteReminder
@@ -260,16 +267,15 @@ angular.module('starter.controllers', [])
         console.log('Time not selected');
       } else {
         var selectedTime = new Date(val * 1000);
-        //console.log("selectedTime:",selectedTime);
         $scope.remindertime = selectedTime.getUTCHours() + " : " + selectedTime.getUTCMinutes();
-        //console.log("getUTCHours:",selectedTime.getUTCHours());
+        $scope.timeInUTC = moment({hour:selectedTime.getUTCHours(), minute:selectedTime.getUTCMinutes() }).utc().format("h:mm");
+        
         var time24 = selectedTime.getUTCHours();
+        console.log("time24:",time24);
         suffix = time24 >= 12 ? "PM":"AM";
         time24 = ((time24 + 11) % 12 + 1);
         $scope.time12hr = time24 + ":" + selectedTime.getUTCMinutes() + " " + suffix;
-        //console.log("$scope.time12hr:",$scope.time12hr);
-        //console.log("$scope.timedata:",$scope.remindertime);
-        //console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+        
       }
     }
 
