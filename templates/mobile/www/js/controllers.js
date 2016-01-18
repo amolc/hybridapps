@@ -229,7 +229,7 @@ angular.module('starter.controllers', [])
 
       $scope.timePickerObject = {
         inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
-        step: 15,  //Optional
+        step: 5,  //Optional
         format: 12,  //Optional
         titleLabel: '12-hour Format',  //Optional
         setLabel: 'Set',  //Optional

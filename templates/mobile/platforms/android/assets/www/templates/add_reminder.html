@@ -13,8 +13,9 @@
     </div>
     <label ng-click="ShowHide()"><i class="ion-plus"></i>Add Reminder</label>
     <div class="list card" ng-show = "IsVisible">
-      <div class="item item-divider">Add Reminder Here</div>
-      <form ng-submit="addUpdateReminder(reminder,addreminderfrm.$valid)" name="addreminderfrm" id="addreminderform" novalidate>
+      <div class="item item-divider" ng-if="!reminderinfo">Add Reminder</div>
+      <div class="item item-divider" ng-if="reminderinfo">Update Reminder</div>
+      <form ng-submit="addUpdateReminder(addreminderfrm.$valid)" name="addreminderfrm" id="addreminderform" novalidate>
         <div class="item item-body">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
@@ -24,14 +25,7 @@
             <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.add_reminder.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.add_reminder.$error">
               <div data-ng-message="required">Please Enter Reminder </div>
             </div>
-            <!-- <div class="item item-input-inset">
-              <label class="item-input-wrapper">
-                 <input type="date" ng-model="reminder.reminder_date" name="reminderdate"required> 
-              </label>
-            </div>
-            <div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.reminderdate.$error" role="alert" class="assertive error_msg" ng-if="addreminderfrm.reminderdate.$error">
-              <div data-ng-message="required">Please Select Date</div>
-            </div> -->
+            
             <ionic-datepicker input-obj="datepickerObject" ng-model="reminder.reminder_date">
               <div class="card"> <span>Date:
                 <label>{{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</label>
@@ -44,12 +38,9 @@
                 </span>
               </div>  
             </ionic-timepicker>
-           <!--  <div class="card">
-              <input type="time" ng-model="reminder.remindertime">
-            </div> -->
             <div>
-              <button class="button button-positive" type="submit" ng-if="stateParams == '' ">Add</button>
-              <button class="button button-positive" type="submit" ng-if="stateParams != '' ">Update</button>
+              <button class="button button-positive" type="submit" ng-if="!reminderinfo">Add</button>
+              <button class="button button-positive" type="submit" ng-if="reminderinfo">Update</button>
             </div>
 
             <div ng-model="reminderaddmsg" ng-show="showreminderaddmsg" class="balanced">{{reminderaddmsg}}</div>
@@ -64,7 +55,7 @@
     <div>
         <ul ng-repeat="reminder in reminderlist">
           <li class="item">
-             <i class="icon ion-compose" ui-sref="tab.addreminder({todo_id :reminder.todo_id})" ng-click="ShowHide()"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}} <br>
+             <i class="icon ion-compose" ng-click="getreminderdetails(reminder)"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}} <br>
              <label class="date_margin"> {{reminder.reminder_date | date:"MMM d, y"}} </label> |
              <label class="time">{{reminder.reminder_time | date:"shortTime"}}</label> 
           </li>

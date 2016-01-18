@@ -5,13 +5,6 @@ angular.module('starter.controllers', [])
   $scope.init = function() {
     $scope.usersession = store.get('userDetail') || {};
      $scope.getreminders();
-     
-
-     if($stateParams){
-      $scope.stateParams = $stateParams.todo_id;
-      $scope.getreminderdetails($stateParams.todo_id); 
-     }
-
   }
 
     $scope.IsVisible = false;
@@ -29,12 +22,12 @@ angular.module('starter.controllers', [])
     @lastDate
   */
 
-    $scope.addUpdateReminder = function(reminder,valid) {
+    $scope.addUpdateReminder = function(valid) {
       if(valid){
-          if ($stateParams.todo_id)
-            $scope.updateReminder(reminder);
-          if ($stateParams.todo_id == '')
-            $scope.addReminder(reminder);  
+          if ($scope.reminderinfo)
+            $scope.updateReminder();
+          else
+            $scope.addReminder();  
       }
       
     };
@@ -46,14 +39,13 @@ angular.module('starter.controllers', [])
    @initialDate
    @lastDate
   */
-  
-    $scope.addReminder = function(reminder) {
-
+      $scope.reminder = {};
+    $scope.addReminder = function() {
+      
       var dateobj = $scope.datepickerObject.inputDate;
-      var fulldate = $scope.datepickerObject.inputDate.getFullYear()+ "-" +($scope.datepickerObject.inputDate.getMonth()+1) + "-" +$scope.datepickerObject.inputDate.getDate();
-
+      var fulldate = dateobj.getFullYear()+ "-" +(dateobj.getMonth()+1) + "-" +dateobj.getDate();
       var todoinfo = {
-        todo_data : reminder.todo_data,
+        todo_data : $scope.reminder.todo_data,
         user_id: $scope.usersession.userid,
         reminder_date: fulldate,
         reminder_time: $scope.time12hr
@@ -65,9 +57,8 @@ angular.module('starter.controllers', [])
          
           $scope.reminderaddmsg = 'Reminder Added Successfully';
           $scope.showreminderaddmsg = true;
-          // Simulate 2 seconds loading delay
+          
           $timeout(function() {
-            // Loadind done here - Show message for 3 more seconds.
             $timeout(function() {
               $scope.showreminderaddmsg = false;
             }, 3000);
@@ -76,7 +67,6 @@ angular.module('starter.controllers', [])
              $scope.IsVisible = false;
           }, 2000);
           $scope.getreminders();
-          //$location.path('/tab/addreminder/');
       }else{
          console.log("Reminder Failes to Add");
       }
@@ -95,14 +85,18 @@ angular.module('starter.controllers', [])
    @lastDate
   */
   
-    $scope.updateReminder = function(reminder,valid) {
+    $scope.updateReminder = function() {
+      
+      var dateobj = $scope.datepickerObject.inputDate;
+      var fulldate = dateobj.getFullYear()+ "-" +(dateobj.getMonth()+1) + "-" +dateobj.getDate();
+
       var tododata = {
-        todo_data : reminder.todo_data,
-        todo_id: $stateParams.todo_id,
-        reminder_date:  $scope.datepickerObject.inputDate,
+        todo_data : $scope.reminderinfo.todo_data,
+        todo_id: $scope.reminderinfo.todo_id,
+        reminder_date: fulldate,
         reminder_time: $scope.time12hr
       }
-      //console.log(tododata);
+      
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
         if(res.status == true){
           $scope.getreminders();
@@ -116,9 +110,7 @@ angular.module('starter.controllers', [])
             }, 3000);
              document.getElementById("addreminderform").reset();
              $location.path('/tab/addreminder/');
-              //$scope.IsVisible = true;
               $scope.getreminders(); 
-             //$scope.IsVisible = false;
           }, 2000);
 
         }else{
@@ -130,6 +122,19 @@ angular.module('starter.controllers', [])
       });
     }
 
+    /**
+   @function getreminderdetails
+   @type post
+   @author sameer Vedpathak
+   @initialDate
+   @lastDate
+  */
+    $scope.getreminderdetails = function(reminder) {
+      $scope.reminderinfo = reminder;
+      $scope.reminder = $scope.reminderinfo;
+      $scope.ShowHide();
+    }  
+
 
    /**
      @function getreminders
@@ -139,36 +144,19 @@ angular.module('starter.controllers', [])
      @lastDate
    */
     $scope.getreminders = function() {
-
+      
       var reminderdata = {
         user_id: $scope.usersession.userid
       }
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
         $scope.reminderlist = res.record;
-        //console.log("reminderlist:",$scope.reminderlist);
         //$scope.sendnotification($scope.reminderlist);
       }).error(function() {
         console.log("Connection Problem.");
       });
     }
 
-  /**
-   @function getreminderdetails
-   @type post
-   @author sameer Vedpathak
-   @initialDate
-   @lastDate
-  */
-    $scope.getreminderdetails = function() {
-      var tododata = {
-        todo_id: $stateParams.todo_id
-      }
-      $http.post(baseUrl + 'gettododetails',tododata).success(function(res, req) {
-        $scope.reminder = res.record[0];
-      }).error(function() {
-        console.log("Connection Problem.");
-      });
-    }
+
 
   /**
     @function deleteReminder
@@ -192,7 +180,7 @@ angular.module('starter.controllers', [])
             
             $scope.reminderdeletemsg = 'Reminder Deleted Successfully';
             $scope.showreminderdeletemsg = true;
-              // Simulate 2 seconds loading delay
+            
               $timeout(function() {
                 // Loadind done here - Show message for 3 more seconds.
                 $timeout(function() {
@@ -241,7 +229,7 @@ angular.module('starter.controllers', [])
 
       $scope.timePickerObject = {
         inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
-        step: 15,  //Optional
+        step: 5,  //Optional
         format: 12,  //Optional
         titleLabel: '12-hour Format',  //Optional
         setLabel: 'Set',  //Optional
@@ -298,12 +286,6 @@ angular.module('starter.controllers', [])
     };*/
 
     
-
-
-
-
-
-
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
