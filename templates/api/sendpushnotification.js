@@ -118,7 +118,7 @@ var job = new CronJob({
               //console.log("UTCdatetime:",UTCdate +" "+ currentUTCtime);
 
             message.addData('title', 'New Reminder');
-            message.addData('sound', 'beep.wav');
+            message.addData('sound', 'solemn.wav');
 
             message.collapseKey = 'testing'; 
             message.delayWhileIdle = true; 

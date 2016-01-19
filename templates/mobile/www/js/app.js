@@ -57,20 +57,19 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
 
         case 'message':
           alert('msg received: ' + e.message);
-          /*
-            {
+            /*{
                 "message": "Hello this is a push notification",
                 "payload": {
                     "message": "Hello this is a push notification",
-                    "sound": "notification",
+                    "sound": "solemn",
                     "title": "New Message",
-                    "from": "813xxxxxxx",
+                    "from": "419937285756",
                     "collapse_key": "do_not_collapse",
                     "foreground": true,
                     "event": "message"
                 }
-            }
-          */
+            }*/
+          
         break;
 
         case 'error':
