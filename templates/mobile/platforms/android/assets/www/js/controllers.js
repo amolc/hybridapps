@@ -254,9 +254,7 @@ angular.module('starter.controllers', [])
           } else {
             $scope.datepickerObject.inputDate = val;
             $scope.UTCdate = moment(val).utc(Date).format("YYYY-MM-DD"); 
-            //console.log($scope.UTCdate);
             //console.log("UTC TIME:",val.getUTCFullYear()  +"-"+ val.getUTCMonth()+1 +"-"+ val.getUTCDate());
-            //console.log('Selected date is : ', val);
           }
       };
 
