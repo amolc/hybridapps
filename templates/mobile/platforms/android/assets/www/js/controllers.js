@@ -50,7 +50,8 @@ angular.module('starter.controllers', [])
         todo_data : $scope.reminder.todo_data,
         user_id: $scope.usersession.userid,
         reminder_date: fulldate,
-        reminder_time: $scope.timeInUTC
+        reminder_time: $scope.utcdatetime
+        //reminder_time:$scope.timeInUTC
         //reminder_date:  $scope.datepickerObject.inputDate,
       }
       
@@ -148,22 +149,43 @@ angular.module('starter.controllers', [])
      @initialDate
      @lastDate
    */
+    $scope.utctimeobj = [];
+
     $scope.getreminders = function() {
       
       var reminderdata = {
         user_id: $scope.usersession.userid
       }
+
       $http.post(baseUrl + 'gettodos',reminderdata).success(function(res, req) {
-        $scope.reminderlist = res.record;
-          //console.log("list length:",$scope.reminderlist.length); 
-        
-        //$scope.sendnotification($scope.reminderlist);
-        //var localTime = moment(object).utc().format('HH:mm');
-        //console.log(localTime);
+            $scope.reminderlist = res.record;
+            
+            // Utc time to local time coversion
+            for (var i = 0; i < $scope.reminderlist.length; i++) {
+                var date = new Date($scope.reminderlist[i].reminder_time +" "+ 'UTC');
+                var replacetime = date.toString();
+                
+                //console.log("replacetime:",replacetime);
+                //console.log(date.getHours() +":"+ date.getMinutes());
+                
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var ampm = hours >= 12 ? 'pm' : 'am';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0'+minutes : minutes;
+                var localtime = hours + ':' + minutes + ' ' + ampm;
+                
+                $scope.reminderlist[i].reminder_time  = localtime;
+                
+            };
+              console.log($scope.reminderlist);
+              //$scope.sendnotification();
       }).error(function() {
         console.log("Connection Problem.");
       });
     }
+  
 
   /**
     @function deleteReminder
@@ -225,12 +247,16 @@ angular.module('starter.controllers', [])
         }
       };
 
+
       var datePickerCallback = function (val) {
           if (typeof(val) === 'undefined') {
             console.log('No date selected');
           } else {
             $scope.datepickerObject.inputDate = val;
-            //console.log('Selected date is : ', val)
+            $scope.UTCdate = moment(val).utc(Date).format("YYYY-MM-DD"); 
+            //console.log($scope.UTCdate);
+            //console.log("UTC TIME:",val.getUTCFullYear()  +"-"+ val.getUTCMonth()+1 +"-"+ val.getUTCDate());
+            //console.log('Selected date is : ', val);
           }
       };
 
@@ -247,7 +273,7 @@ angular.module('starter.controllers', [])
           timePickerCallback(val);
         }
       };
-      
+     
     /**** code for current time and with am/pm ***/
 
       var current_date = new Date();
@@ -269,13 +295,16 @@ angular.module('starter.controllers', [])
         var selectedTime = new Date(val * 1000);
         $scope.remindertime = selectedTime.getUTCHours() + " : " + selectedTime.getUTCMinutes();
         $scope.timeInUTC = moment({hour:selectedTime.getUTCHours(), minute:selectedTime.getUTCMinutes() }).utc().format("h:mm");
-        
+        $scope.utcdatetime = $scope.UTCdate +" "+ $scope.timeInUTC;
+        //console.log($scope.utcdatetime);
+
         var time24 = selectedTime.getUTCHours();
         console.log("time24:",time24);
         suffix = time24 >= 12 ? "PM":"AM";
         time24 = ((time24 + 11) % 12 + 1);
         $scope.time12hr = time24 + ":" + selectedTime.getUTCMinutes() + " " + suffix;
-        
+        console.log( $scope.timePickerObject);
+        //console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
       }
     }
 

@@ -57,9 +57,11 @@
           <li class="item">
              <i class="icon ion-compose" ng-click="getreminderdetails(reminder)"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}} <br>
              <label class="date_margin"> {{reminder.reminder_date | date:"MMM d, y"}} </label> |
-             <label class="time">{{reminder.reminder_time | date:"shortTime"}}</label> 
+             <label class="time">{{reminder.reminder_time | date:'h:mma'}}</label> 
+
           </li>
         </ul>
+      {{moment}}  
     </div>
   </ion-content>
 </ion-view>

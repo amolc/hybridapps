@@ -18,6 +18,7 @@
     <link href="lib/ionic-timepicker/src/ionic-timepicker.styles.css" rel="stylesheet">
     <link href="lib/ionic-timepicker/src/ionic-timepicker-12-hour.html">
     <link href="lib/ionic-timepicker/src/ionic-timepicker-24-hour.html">
+
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -37,10 +38,7 @@
     <script src="lib/ionic-timepicker/dist/ionic-timepicker.bundle.min.js"></script>
     <script src="lib/ionic-timepicker/src/ionic-timepicker.app.js"></script>
     <script src="lib/ionic-timepicker/src/ionic-timepicker.directive.js"></script>
-    <script src="lib/moment.js"></script>
-    <script>
-        moment().format();
-    </script>
+
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/services/RequestsService.js"></script>
@@ -48,7 +46,9 @@
     <script src="js/logincontroller.js"></script>
     <script src="js/services.js"></script>
     <script src="config/config.js"></script>
-
+    <script src="lib/moment.js"></script>
+    <script> moment().format(); </script>
+    <script src="lib/moment-with-locales.min.js"></script>
   </head>
   <body ng-app="starter">
     <!--
