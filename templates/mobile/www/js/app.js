@@ -7,7 +7,7 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
 
 
 
-.run(function($ionicPlatform,RequestsService,$cordovaDevice,store) {
+.run(function($ionicPlatform,$cordovaDevice,store) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,10 +30,7 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
       var uuid = $cordovaDevice.getUUID();
       store.set('platform',currentPlatform);
       store.set('deviceid',uuid);
-      /*alert(store.get('platform'));
-      alert(store.get('deviceid'));
-      console.log("platform:",store.get('platform'));
-      console.log("platform:",store.get('deviceid'));*/
+    
     });
 
 
@@ -47,11 +44,7 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
           if(e.regid.length > 0){
             var device_token = e.regid;
             store.set('device_token',device_token);
-            //alert(store.get('device_token'));
-/*            RequestsService.register(device_token).then(function(response){
-            alert('registered!');
 
-            });*/
           }
         break;
 
@@ -181,13 +174,6 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
   $urlRouterProvider.otherwise('login');
 
 })
-
-.service('RequestsService', ['$http', '$q', '$ionicLoading',  RequestsService])
-function RequestsService($http, $q, $ionicLoading){
-  var baseUrl = 'http://node.fountaintechies.com:9999/api/';
-
-}
-
 
 
 

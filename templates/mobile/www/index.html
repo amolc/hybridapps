@@ -10,45 +10,40 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <script type="text/javascript" charset="utf-8" src="js/PushNotification.js"></script>
-    <link href="lib/ionic-datepicker/src/ionic-datepicker.styles.css" rel="stylesheet">
-    <link href="lib/ionic-datepicker/src/ionic-datepicker.popup.html">
-    <link href="lib/ionic-datepicker/src/ionic-datepicker.modal.html">
-
-    <link href="lib/ionic-timepicker/src/ionic-timepicker.styles.css" rel="stylesheet">
-    <link href="lib/ionic-timepicker/src/ionic-timepicker-12-hour.html">
-    <link href="lib/ionic-timepicker/src/ionic-timepicker-24-hour.html">
-
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+   
+    <link href="lib/ionic-datepicker.styles.css" rel="stylesheet">
+    <link href="lib/ionic-datepicker.popup.html">
+    <link href="lib/ionic-datepicker.modal.html">
+    <link href="lib/ionic-timepicker.styles.css" rel="stylesheet">
+    <link href="lib/ionic-timepicker-12-hour.html">
+    <link href="lib/ionic-timepicker-24-hour.html">
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/a0-angular-storage/dist/angular-storage.min.js"></script>
+    <script src="lib/angular-storage.min.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="lib/ng-cordova.min.js"></script>
     <script src="cordova.js"></script>
-    <script src="lib/angular-messages/angular-messages.js"></script>
-    <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
-    <script src="lib/ionic-datepicker/src/ionic-datepicker.app.js"></script>
-    <script src="lib/ionic-datepicker/src/ionic-datepicker.service.js"></script>
-    <script src="lib/ionic-datepicker/src/ionic-datepicker.directive.js"></script>
-
-    <script src="lib/ionic-timepicker/dist/ionic-timepicker.bundle.min.js"></script>
-    <script src="lib/ionic-timepicker/src/ionic-timepicker.app.js"></script>
-    <script src="lib/ionic-timepicker/src/ionic-timepicker.directive.js"></script>
+    <script src="lib/angular-messages.min.js"></script>
+    <script src="lib/ionic-datepicker.bundle.min.js"></script>
+    <script src="lib/ionic-datepicker.app.js"></script>
+    <script src="lib/ionic-datepicker.service.js"></script>
+    <script src="lib/ionic-datepicker.directive.js"></script>
+    <script src="lib/ionic-timepicker.bundle.min.js"></script>
+    <script src="lib/ionic-timepicker.app.js"></script>
+    <script src="lib/ionic-timepicker.directive.js"></script>
+    <script src="lib/moment.js"></script>
+    <script> moment().format(); </script>
+    <script src="lib/moment-with-locales.min.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
-    <script src="js/services/RequestsService.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/logincontroller.js"></script>
     <script src="js/services.js"></script>
     <script src="config/config.js"></script>
-    <script src="lib/moment.js"></script>
-    <script> moment().format(); </script>
-    <script src="lib/moment-with-locales.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/PushNotification.js"></script>
+    
   </head>
   <body ng-app="starter">
     <!--
