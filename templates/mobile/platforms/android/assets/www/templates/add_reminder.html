@@ -54,11 +54,6 @@
     <div ng-model="reminderdeletemsg" ng-show="showreminderdeletemsg" class="balanced">{{reminderdeletemsg}}</div>
     <div>
         <ul ng-repeat="reminder in reminderlist">
-          <!-- <li class="item">
-             <i class="icon ion-compose" ng-click="getreminderdetails(reminder)"></i> <i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i> {{reminder.todo_data}} <br>
-             <label class="date_margin"> {{reminder.reminder_date | date:"MMM d, y"}} </label> |
-             <label class="time">{{reminder.reminder_time | date:'h:mma'}}</label> 
-          </li> -->
           <li class="item">
              <span class="edit_icon_todolist"><i class="icon ion-compose" ng-click="getreminderdetails(reminder)"></i></span> 
              <span class="delete_icon_todolist"><i class="icon ion-trash-b" ng-click="deleteReminder(reminder)"></i></span>
