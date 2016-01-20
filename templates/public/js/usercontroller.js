@@ -58,20 +58,17 @@ angular.module('DemoApp').controller('usercontroller', [
      */
     $scope.addtodos = function(data) {
 
-        var selectedTime = data.remindertime;
-        var hrs = selectedTime.getHours();
-        var min = selectedTime.getMinutes();
-        var AMPM = hrs >= 12 ? 'PM' : 'AM';
-        hrs = hrs % 12;
-        hrs = hrs ? hrs : 12; // the hour '0' should be '12'
-        minutes = min < 10 ? '0'+min : min;
-        var finaltime = hrs + ':' + min + ' ' + AMPM;
-
+        var selecteddate = data.reminderdate;
+        var utcdate = moment(selecteddate).utc(Date).format("YYYY-MM-DD"); 
+        var selectedtimee = data.remindertime;
+        var utctime = moment(selectedtimee).utc().format("h:mm") ;
+        var utcdatetime = utcdate +" "+ utctime;
+        
         var tododata = {
             todo_data : data.todo_data,
             user_id: $scope.userSession.userid,
-            reminder_date:data.reminderdate,
-            reminder_time:finaltime
+            reminder_date:utcdate,
+            reminder_time:utcdatetime
         }
         
         console.log("tododata:",tododata);
@@ -107,20 +104,17 @@ angular.module('DemoApp').controller('usercontroller', [
      */
     $scope.updatetodos = function(data) {
 
-        var selectedTime = data.remindertime;
-        var hrs = selectedTime.getHours();
-        var min = selectedTime.getMinutes();
-        var AMPM = hrs >= 12 ? 'PM' : 'AM';
-        hrs = hrs % 12;
-        hrs = hrs ? hrs : 12; // the hour '0' should be '12'
-        minutes = min < 10 ? '0'+min : min;
-        var finaltime = hrs + ':' + min + ' ' + AMPM;
+        var selecteddate = data.reminderdate;
+        var utcdate = moment(selecteddate).utc(Date).format("YYYY-MM-DD"); 
+        var selectedtimee = data.remindertime;
+        var utctime = moment(selectedtimee).utc().format("h:mm") ;
+        var utcdatetime = utcdate +" "+ utctime;
 
         var tododata = {
           todo_data : data.todo_data,
           todo_id: $stateParams.todo_id,
-          reminder_date:data.reminderdate,
-          reminder_time:finaltime
+          reminder_date:utcdate,
+          reminder_time:utcdatetime
         }
 
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
@@ -177,6 +171,21 @@ angular.module('DemoApp').controller('usercontroller', [
       }
       $http.post(baseUrl + 'gettodos',tododata).success(function(res, req) {
         $scope.todolist = res.record;
+        for (var i = 0; i < $scope.todolist.length; i++) {
+            var utctolocaltime = new Date($scope.todolist[i].reminder_time +" "+ 'UTC');
+            var replacetime = utctolocaltime.toString();
+            
+            var hours = utctolocaltime.getHours();
+            var minutes = utctolocaltime.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var localtime = hours + ':' + minutes + ' ' + ampm;
+           
+            $scope.todolist[i].reminder_time = localtime; 
+        };
+        
       }).error(function() {
         console.log("Connection Problem.");
       });

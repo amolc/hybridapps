@@ -26,42 +26,9 @@
 		            				</div>
           						</span>
 							</div>
-							<!-- <div class="col-4"> -->
-							<!-- Angular bootstrap datetimepicker -->
-								<!-- <div class="dropdown" >
-									<a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" style="color:black;">
-										<div class="input-group" style="position: relative;"><input type="text" class="form-control" data-ng-model="data.reminder_date" placeholder="click icon to select date" name="reminderdate" required>
-											<i class="fa fa-calendar" ng-click="ShowHidecal()"></i>
-										</div>
-									</a>
-									
-									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" ng-show = "IsCalVisible">
-										<datetimepicker data-ng-model="data.reminder_date" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
-									</ul>
-								</div>
-								<span >
-		            				<div data-ng-messages="addreminderfrm.$submitted && addreminderfrm.reminderdate.$error" role="alert" class="error_msg">
-			                  			<div data-ng-message="required">Please Select Date</div>
-		            				</div>
-          						</span> -->
-          					<!-- <div id="datepickerdemoBasicUsage">
-							  <md-content>
-							    <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
-							  </md-content>
-							</div> -->
-							<!-- </div> -->
-							
-							<!-- <div class="col-2">
-								
-							</div> -->
 						</div>
 						<div class="field-group clear row" >
 							<div class="col-4">
-								<!-- <div id="datepickerdemoBasicUsage">
-								  <md-content>
-								    <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
-								  </md-content>
-								</div> -->
 								<md-input-container>
 							        <input time="false" date="true" mdc-datetime-picker="" type="text" id="date" placeholder="Date"
 										ng-model="data.reminderdate" 
@@ -115,7 +82,7 @@
 								{{todo.todo_data}}
 							</td>
 							<td>
-								{{todo.reminder_date | date:"dd/MM/yyyy"}}
+								{{todo.reminder_date | date:"dd-MM-yyyy"}}
 							</td>
 							<td>
 								{{todo.reminder_time | date:"shortTime"}}
