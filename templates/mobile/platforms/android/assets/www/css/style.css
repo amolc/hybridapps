@@ -14,3 +14,14 @@
 .time_margin{
 	margin-left: 10px;	
 }
+.listtodo_label{
+	margin-left: 7px;
+}
+.edit_icon_todolist{
+	padding: 3px;
+}
+.delete_icon_todolist{
+	position: absolute;
+	margin-top: 22px;
+	margin-left: -19px;
+}

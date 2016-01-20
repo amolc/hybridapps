@@ -68,7 +68,7 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
                     "foreground": true,
                     "event": "message"
                 }
-            }*/
+            };*/
           
         break;
 
