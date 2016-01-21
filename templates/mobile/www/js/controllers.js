@@ -100,7 +100,8 @@ angular.module('starter.controllers', [])
         todo_data : $scope.reminderinfo.todo_data,
         todo_id: $scope.reminderinfo.todo_id,
         reminder_date: fulldate,
-        reminder_time: $scope.timeInUTC
+        reminder_time: $scope.utcdatetime
+        //reminder_time: $scope.timeInUTC
       }
       
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
@@ -247,13 +248,14 @@ angular.module('starter.controllers', [])
         }
       };
 
-
       var datePickerCallback = function (val) {
           if (typeof(val) === 'undefined') {
             console.log('No date selected');
           } else {
+            
             $scope.datepickerObject.inputDate = val;
             $scope.UTCdate = moment(val).utc(Date).format("YYYY-MM-DD"); 
+            console.log("val:",val);
             //console.log("UTC TIME:",val.getUTCFullYear()  +"-"+ val.getUTCMonth()+1 +"-"+ val.getUTCDate());
           }
       };
