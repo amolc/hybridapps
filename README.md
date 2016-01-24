@@ -1,5 +1,9 @@
-# express-hybrid
+# hybridapps
 
 ##Installation
 
-npm install -g express-hybrid
+npm install -g hybridapps
+
+##Tutorials and More
+
+http://www.amolchawathe.com/hybridapps
