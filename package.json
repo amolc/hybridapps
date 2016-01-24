@@ -1,7 +1,7 @@
 {
-  "name": "express-hybrid",
+  "name": "hybridapps",
   "description": "Express' Hybrid application generator",
-  "version": "0.3.8",
+  "version": "0.0.4",
   "author": "Amol C <amol.chawathe@fountaintechies.com>",
   "contributors": [
     "Amol Vhankalas <amol.vhankalas@fountaintechies.com>",
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amolc/express-hybrid.git"
+    "url": "git+https://github.com/amolc/hybridapps.git"
   },
   "license": "MIT",
   "dependencies": {
@@ -55,7 +55,7 @@
     "test-ci": "mocha --reporter spec --check-leaks test/"
   },
   "bugs": {
-    "url": "https://github.com/amolc/express-hybrid/issues"
+    "url": "https://github.com/amolc/hybridapps/issues"
   },
-  "homepage": "https://github.com/amolc/express-hybrid#readme"
+  "homepage": "https://github.com/amolc/hybridapps#readme"
 }
