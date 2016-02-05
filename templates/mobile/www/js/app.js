@@ -38,7 +38,7 @@ angular.module('starter', ['ionic' ,'ngCordova','starter.controllers','starter.s
 
       window.onNotification = function(e){
 
-      console.log('notification received');
+      //console.log('notification received');
       switch(e.event){
         case 'registered':
           if(e.regid.length > 0){

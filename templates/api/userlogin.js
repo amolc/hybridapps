@@ -31,12 +31,12 @@ exports.login = function(req,res){
 }
 
 exports.signup = function(req,res){
-      console.log(req.body);
+    
       userCRUD.load({
         user_email : req.body.user_email,
       }, function (err, val) {
         if(val.length>0){
-          console.log("val:",val);
+          
             var resdata={
                 record:'',
                 status:false,

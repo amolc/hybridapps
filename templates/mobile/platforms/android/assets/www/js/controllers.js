@@ -91,7 +91,8 @@ angular.module('starter.controllers', [])
    @lastDate
   */
     
-    $scope.timeInUTC="";
+    $scope.timeInUTC = "";
+    
     $scope.updateReminder = function() {
       var dateobj = $scope.datepickerObject.inputDate;
       var fulldate = dateobj.getFullYear()+ "-" +(dateobj.getMonth()+1) + "-" +dateobj.getDate();
@@ -100,7 +101,8 @@ angular.module('starter.controllers', [])
         todo_data : $scope.reminderinfo.todo_data,
         todo_id: $scope.reminderinfo.todo_id,
         reminder_date: fulldate,
-        reminder_time: $scope.timeInUTC
+        reminder_time: $scope.utcdatetime
+        //reminder_time: $scope.timeInUTC
       }
       
       $http.post(baseUrl + 'updatetodos',tododata).success(function(res, req) {
@@ -115,8 +117,9 @@ angular.module('starter.controllers', [])
               $scope.showreminderupdatemsg = false;
             }, 3000);
              document.getElementById("addreminderform").reset();
-             $location.path('/tab/addreminder/');
               $scope.getreminders(); 
+              $state.go('tab.addreminder');
+              location.reload();
           }, 2000);
 
         }else{
@@ -247,13 +250,14 @@ angular.module('starter.controllers', [])
         }
       };
 
-
       var datePickerCallback = function (val) {
           if (typeof(val) === 'undefined') {
             console.log('No date selected');
           } else {
+            
             $scope.datepickerObject.inputDate = val;
             $scope.UTCdate = moment(val).utc(Date).format("YYYY-MM-DD"); 
+            console.log("val:",val);
             //console.log("UTC TIME:",val.getUTCFullYear()  +"-"+ val.getUTCMonth()+1 +"-"+ val.getUTCDate());
           }
       };

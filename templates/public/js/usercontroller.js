@@ -71,9 +71,9 @@ angular.module('DemoApp').controller('usercontroller', [
             reminder_time:utcdatetime
         }
         
-        console.log("tododata:",tododata);
+        
       $http.post(baseUrl + 'addtodos',tododata).success(function(res, req) {
-        console.log("res:",res);
+        
         if(res.status == true){
           $scope.gettodos();
           $scope.IsVisible = false;
@@ -152,7 +152,7 @@ angular.module('DemoApp').controller('usercontroller', [
       }
       $http.post(baseUrl + 'gettododetails',tododata).success(function(res, req) {
         $scope.data = res.record[0];
-        console.log("data:",$scope.data);
+        
       }).error(function() {
         console.log("Connection Problem.");
       });
