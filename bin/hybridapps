@@ -266,7 +266,7 @@ prompt.get(schema, function (err, result) {
       copyDir('mobile',pathName);
       copyDir('public',pathName);
       copyDir('api',pathName);
-      write(pathName + '/www', www, 0755);
+      write(pathName + '/server.js', www, 0755);
       complete(app_name);
 
       function complete(app_name) {
