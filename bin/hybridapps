@@ -240,8 +240,6 @@ prompt.get(schema, function (err, result) {
       var mpkg = pkg.replace('{name}', app_name);
       //console.log(mpkg);
       var dirPath = path.join(__dirname,'..',app_name);
-    //  write(dirPath + '/app.js', app);
-      //write(dirPath + '/package.json',mpkg);
 
       if(result.database.length !== 0 || result.host.length !== 0 || result.dbuser.length !== 0 || result.dbpassword.length !== 0 ){
         config = config.replace('my_db', result.database.toString());
@@ -267,8 +265,8 @@ prompt.get(schema, function (err, result) {
 
       copyDir('mobile',pathName);
       copyDir('public',pathName);
+      copyDir('api',pathName);
       write(pathName + '/www', www, 0755);
-      mkdir(pathName + '/api',function(){});
       complete(app_name);
 
       function complete(app_name) {
