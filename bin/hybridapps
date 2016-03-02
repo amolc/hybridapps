@@ -235,7 +235,7 @@ prompt.get(schema, function (err, result) {
       mkdir(pathName, function(){});
       var config = loadTemplate('config.js');
       var pkg = loadTemplate('package.json');
-      var www = loadTemplate('www');
+      var www = loadTemplate('server.js');
       www = www.replace('{name}', app_name);
       var mpkg = pkg.replace('{name}', app_name);
       //console.log(mpkg);
