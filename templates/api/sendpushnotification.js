@@ -89,12 +89,14 @@ moment().format();
 var connection = env.Dbconnection;
 var CronJob = require('cron').CronJob;
 
-
-
-
+var express = require('express');
+var http = require('http');
+var CRUD = require('mysql-crud');
+var notificationCRUD = CRUD(connection,'user_notifications');
+ 
 
 var job = new CronJob({
-  cronTime: '20 * * * * *',
+  cronTime: '40 * * * * *',
   onTick: function() {
             var gcm = require('node-gcm');
             var sender = new gcm.Sender('AIzaSyAJ9kNU7h4VSK2oiqrD5EatNVvzBD6zsxw');
@@ -110,7 +112,7 @@ var job = new CronJob({
               //console.log(new Date());
               var currentdate = new Date();
               var finaldate = currentdate.yyyymmdd();
-              var currentUTCtime = moment.utc().format("h:mm");
+              var currentUTCtime = moment.utc().format("h:mm a");
               //console.log("utc hrs line no.109: ",currentUTCtime);
               //console.log(currentdate);
               
@@ -130,22 +132,41 @@ var job = new CronJob({
 
           var query1 = "SELECT todo_id,todo_data,user_id,reminder_date,reminder_time,deviceid,platform,device_token FROM device_information JOIN todos ON device_information.userid=todos.user_id";
           connection.query(query1, function( error , result ){
-              for (var i = 0; i < result.length; i++) {
-                if (result[i].reminder_date.yyyymmdd() == finaldate && result[i].reminder_time == UTCdate +" "+ currentUTCtime) {
-                    //console.log("Date Time match");
-                    remidermessages = result[i].todo_data;
-                    registrationIds = result[i].device_token;
-                    remindertimes = result[i].reminder_time;
-                    message.addData('message', remidermessages);
-                    
-                    sender.send(message, registrationIds, function(err,result1) {
-                        //console.log("the result is");
-                        //console.log(result1);
-                        console.log( err );
-                    });
-                  }
+             
+              if(result){
+             
+                for (var i = 0; i < result.length; i++) {
+                  //console.log(result[i].reminder_date.yyyymmdd() + "==" + finaldate);
+                  //console.log(result[i].reminder_time + "==" + UTCdate +" "+ currentUTCtime);
 
-              };
+                  if (result[i].reminder_date.yyyymmdd() == finaldate && result[i].reminder_time == UTCdate +" "+ currentUTCtime) {
+                      
+                      //console.log("Date Time match");
+                      remidermessages = result[i].todo_data;
+                      registrationIds = result[i].device_token;
+                      remindertimes = result[i].reminder_time;
+                      message.addData('message', remidermessages);
+                      
+                      sender.send(message, registrationIds, function(err,result1) {
+                          console.log( err );
+                        });
+
+                        notificationCRUD.create({
+                            'todo_id': result[i].todo_id,
+                            'user_id': result[i].user_id,
+                            'device_id': result[i].deviceid,
+                            'platform': result[i].platform,
+                            'created_on':env.timestamp(),
+                            'modified_on':env.timestamp()
+                          },function(error, result2) {
+                             //res.jsonp(result2);
+                        });
+                    }
+
+
+                }
+
+              }
 
           });
     

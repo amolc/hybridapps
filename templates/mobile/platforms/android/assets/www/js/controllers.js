@@ -144,7 +144,7 @@ angular.module('starter.controllers', [])
       $scope.ShowHide();
     }  
 
-
+    //console.log(new Date());
    /**
      @function getreminders
      @type post
@@ -182,7 +182,7 @@ angular.module('starter.controllers', [])
                 $scope.reminderlist[i].reminder_time  = localtime;
                 
             };
-              console.log($scope.reminderlist);
+             
               //$scope.sendnotification();
       }).error(function() {
         console.log("Connection Problem.");
@@ -257,7 +257,7 @@ angular.module('starter.controllers', [])
             
             $scope.datepickerObject.inputDate = val;
             $scope.UTCdate = moment(val).utc(Date).format("YYYY-MM-DD"); 
-            console.log("val:",val);
+            //console.log("val:",val);
             //console.log("UTC TIME:",val.getUTCFullYear()  +"-"+ val.getUTCMonth()+1 +"-"+ val.getUTCDate());
           }
       };
@@ -265,8 +265,8 @@ angular.module('starter.controllers', [])
       $scope.timePickerObject = {
         inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
         step: 5,  //Optional
-        format: 12,  //Optional
-        titleLabel: '12-hour Format',  //Optional
+        format: 24,  //Optional
+        titleLabel: '24-hour Format',  //Optional
         setLabel: 'Set',  //Optional
         closeLabel: 'Close',  //Optional
         setButtonType: 'button-positive',  //Optional
@@ -298,14 +298,12 @@ angular.module('starter.controllers', [])
         $scope.remindertime = selectedTime.getUTCHours() + " : " + selectedTime.getUTCMinutes();
         $scope.timeInUTC = moment({hour:selectedTime.getUTCHours(), minute:selectedTime.getUTCMinutes() }).utc().format("h:mm");
         $scope.utcdatetime = $scope.UTCdate +" "+ $scope.timeInUTC;
-        //console.log($scope.utcdatetime);
 
         var time24 = selectedTime.getUTCHours();
-        console.log("time24:",time24);
+        
         suffix = time24 >= 12 ? "PM":"AM";
         time24 = ((time24 + 11) % 12 + 1);
         $scope.time12hr = time24 + ":" + selectedTime.getUTCMinutes() + " " + suffix;
-        console.log( $scope.timePickerObject);
         //console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
       }
     }

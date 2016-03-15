@@ -54,7 +54,7 @@ angular.module('starter.controllers')
               }
 
               $http.post(baseUrl + 'deviceregister', deviceinfo).success(function(res,req){
-                console.log("res:",res);
+             
               }).error(function(){
                   console.log("Error to get device info");
               });
@@ -65,10 +65,6 @@ angular.module('starter.controllers')
           console.log("Connection Problem..");
         });
 
-          //console.log("platform:",store.get('platform'));
-          //console.log("deviceid:",store.get('deviceid'));
-          //console.log("device_token:",store.get('device_token'));
-          
       }
     };
 
@@ -92,7 +88,6 @@ angular.module('starter.controllers')
     $scope.signup = function(info,valid){
       if(valid){
          $http.post(baseUrl + 'signup', info).success(function(res,req){
-            console.log("res:",res);
             if(res.status == true)
               {
                   $scope.signupmsg = 'User Created Successfully';
