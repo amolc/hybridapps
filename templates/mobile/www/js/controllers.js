@@ -296,7 +296,7 @@ angular.module('starter.controllers', [])
       } else {
         var selectedTime = new Date(val * 1000);
         $scope.remindertime = selectedTime.getUTCHours() + " : " + selectedTime.getUTCMinutes();
-        $scope.timeInUTC = moment({hour:selectedTime.getUTCHours(), minute:selectedTime.getUTCMinutes() }).utc().format("h:mm");
+        $scope.timeInUTC = moment({hour:selectedTime.getUTCHours(), minute:selectedTime.getUTCMinutes() }).utc().format("h:mm a");
         $scope.utcdatetime = $scope.UTCdate +" "+ $scope.timeInUTC;
 
         var time24 = selectedTime.getUTCHours();
